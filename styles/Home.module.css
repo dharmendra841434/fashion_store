@@ -1,0 +1,13 @@
+.overlay {
+  content: "";
+  position: absolute;
+  top: -20rem;
+  bottom: 0;
+  left: 0px;
+  width: 100%;
+  background: #d10024;
+  opacity: 0.9;
+  -webkit-transform: skewX(-45deg);
+  -ms-transform: skewX(-45deg);
+  transform: skewX(-45deg);
+}
