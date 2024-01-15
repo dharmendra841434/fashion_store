@@ -144,13 +144,12 @@ const NewProductSlider = () => {
                       <BsCurrencyRupee className=" text-red-600 text-lg" />
                       <span className=" text-red-600 font-semibold ">
                         {calculateDiscountedPrice(item?.price, item?.discount)}
-                        .00
                       </span>
                     </div>
                     <div className=" flex items-center">
                       <BsCurrencyRupee className=" text-sm text-gray-400" />
                       <p className=" text-sm line-through text-gray-400">
-                        {item?.price}.00
+                        {item?.price}
                       </p>
                     </div>
                   </div>
@@ -196,13 +195,12 @@ const NewProductSlider = () => {
                       <BsCurrencyRupee className=" text-red-600 text-lg" />
                       <span className=" text-red-600 font-semibold ">
                         {calculateDiscountedPrice(item?.price, item?.discount)}
-                        .00
                       </span>
                     </div>
                     <div className=" flex items-center">
                       <BsCurrencyRupee className=" text-sm text-gray-400" />
                       <p className=" text-sm line-through text-gray-400">
-                        {item?.price}.00
+                        {item?.price}
                       </p>
                     </div>
                   </div>
@@ -248,13 +246,12 @@ const NewProductSlider = () => {
                       <BsCurrencyRupee className=" text-red-600 text-lg" />
                       <span className=" text-red-600 font-semibold ">
                         {calculateDiscountedPrice(item?.price, item?.discount)}
-                        .00
                       </span>
                     </div>
                     <div className=" flex items-center">
                       <BsCurrencyRupee className=" text-sm text-gray-400" />
                       <p className=" text-sm line-through text-gray-400">
-                        {item?.price}.00
+                        {item?.price}
                       </p>
                     </div>
                   </div>
