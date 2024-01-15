@@ -3,12 +3,16 @@ import React from "react";
 import styles from "../styles/Home.module.css";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import NewProductSlider from "../components/homeComponents/NewProductSlider";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
+  // const selectedMovie = useSelector((state) => state.app.selectedMovie);
+
+  // console.log(selectedMovie);
   return (
     <div className=" py-6">
-      <div className=" max-w-7xl mx-auto ">
-        <div className=" grid grid-cols-3 gap-x-10">
+      <div className=" max-w-7xl mx-auto px-3 ">
+        <div className=" grid grid-cols-1 lg:grid-cols-3 gap-10 px-2">
           <div className=" relative flex items-center group  bg-appGray/70 justify-center  h-[15rem] overflow-hidden ">
             <Image
               src="/images/tshirt.png"
@@ -81,7 +85,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <NewProductSlider />
+        <div className=" px-3">
+          <NewProductSlider />
+        </div>
       </div>
     </div>
   );

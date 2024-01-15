@@ -18,7 +18,7 @@ import { SiAmericanexpress } from "react-icons/si";
 const CustomFooter = () => {
   return (
     <div>
-      <div className=" bg-appBlack border-t-2 border-appRed py-12">
+      <div className=" bg-appBlack border-t-2 border-appRed py-12 px-2">
         <div className=" max-w-7xl mx-auto">
           <div className=" grid grid-cols-2 lg:grid-cols-4 lg:gap-x-4 px-3">
             <div>

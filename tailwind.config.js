@@ -8,6 +8,11 @@ module.exports = {
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  plugins: [
+    require("tailwindcss-scoped-groups")({
+      groups: ["one", "two"],
+    }),
+  ],
   theme: {
     extend: {
       fontFamily: {
