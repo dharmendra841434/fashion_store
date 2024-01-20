@@ -9,7 +9,7 @@ const HotDeals = () => {
       <div className=" flex justify-between flex-col md:flex-row max-w-[95rem] mx-auto ">
         <div className=" md:hidden lg:block">
           <Image
-            src="/Images/polo.png"
+            src="/images/polo.png"
             height={450}
             width={450}
             className=" -rotate-12 -ml-8 "
@@ -17,7 +17,7 @@ const HotDeals = () => {
         </div>
         <div className=" hidden md:block lg:hidden">
           <Image
-            src="/Images/polo.png"
+            src="/images/polo.png"
             height={400}
             width={400}
             className=" -rotate-12 -ml-8 "
@@ -43,7 +43,7 @@ const HotDeals = () => {
         </div>
         <div className=" md:hidden lg:block">
           <Image
-            src="/Images/ps6.png"
+            src="/images/ps6.png"
             className=" mr-8"
             height={300}
             width={300}
@@ -51,7 +51,7 @@ const HotDeals = () => {
         </div>
         <div className=" hidden md:block lg:hidden">
           <Image
-            src="/Images/ps6.png"
+            src="/images/ps6.png"
             className=" mr-8"
             height={250}
             width={250}
