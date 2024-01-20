@@ -8,3 +8,13 @@ export function calculateDiscountedPrice(originalPrice, discountPercentage) {
 
   return Math.floor(discountedPrice);
 }
+
+export const colors = {
+  black: "#191919",
+  blue: "#1D2B53",
+  cream: "#FFE7C1",
+  purple: "#872341",
+  cream404: "#FECDA6",
+  green404: "#99B080",
+  gray: "#A4AB9D",
+};

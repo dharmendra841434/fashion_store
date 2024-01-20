@@ -7,12 +7,12 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import { BsCurrencyRupee } from "react-icons/bs";
-import Spline from "@splinetool/react-spline";
 import { calculateDiscountedPrice } from "../../utils/helper";
 import {
   allProductsRequest,
   setfiltredList,
 } from "../../app/slice/productSlice";
+import DropDown from "./DropDown";
 
 const NewProductSlider = () => {
   const path = useRouter();
@@ -24,7 +24,7 @@ const NewProductSlider = () => {
 
   const [activeItem, setActiveItem] = useState("T-Shirt");
   var settings = {
-    slidesToShow: filtredList?.length,
+    slidesToShow: 5, //filtredList?.length,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
@@ -62,13 +62,19 @@ const NewProductSlider = () => {
       // console.log(hoodies, "hood");
       dispatch(setfiltredList(hoodies));
     }
-    return;
+    if (menuType === "T-Shirt") {
+      let hoodies = list?.filter((item, index) => item?.category === "T-Shirt");
+      // console.log(hoodies, "hood");
+      dispatch(setfiltredList(hoodies));
+    }
   };
 
+  const colors = ["black", "red", "blue", "gray"];
+
   return (
-    <div className=" mt-7">
-      <div className=" flex items-center justify-between py-5 mx-2 lg:mx-0">
-        <h2 className=" font-bold text-gray-700 text-2xl uppercase">
+    <div className=" mt-6">
+      <div className=" flex items-center  justify-between py-5  lg:mx-0">
+        <h2 className=" font-bold text-gray-700  w-1/3  lg:w-auto text-2xl uppercase">
           New Products
         </h2>
         <div className=" hidden lg:block">
@@ -100,37 +106,27 @@ const NewProductSlider = () => {
             ))}
           </div>
         </div>
-        <div className=" lg:hidden ">
-          <button
-            onClick={() => {
-              setDropDown(!dropDown);
-            }}
-            className=" flex items-center justify-between border-2 py-1 border-gray-600 rounded-md px-5"
-          >
-            <p>{selectedOption}</p>
-            <MdKeyboardArrowDown
-              className={` transition-all duration-300 ease-in-out ml-3 ${
-                dropDown ? "rotate-180" : "rotate-0"
-              }`}
-            />
-          </button>
-        </div>
+        <DropDown
+          data={newProductmenu}
+          setDropDown={setDropDown}
+          dropDown={dropDown}
+          selectedItem={selectedOption}
+          setSelectedItem={setSelectedOption}
+        />
       </div>
-      <div className=" my-10 hidden lg:block">
+      <div className=" mt-5 mb-10 hidden lg:block">
         <Slider {...settings}>
           {filtredList?.map((item, index) => (
-            <div key={index} className="  px-1 group z-20 ">
-              <div
-                // onMouseOver={() => {
-                //   setActiveItem(item?.name);
-                // }}
-                // onMouseDown={() => {
-                //   setActiveItem("");
-                // }}
-                className=" bg-white  transition-all duration-300 ease-in-out border-2 border-gray-300 hover:border-red-500 cursor-pointer "
-              >
+            <div key={index} className="  px-1 group z-20 py-4 ">
+              <div className=" bg-white relative   transition-all duration-300 ease-in-out border-2 border-gray-300 hover:border-red-500 cursor-pointer hover:-translate-y-3 ">
+                <div className=" absolute  top-2 right-2 border text-appRed text-sm  px-1 border-appRed ">
+                  {item?.discount}%Off
+                </div>
                 <div className=" px-8 mt-10">
-                  <img src={item.coverImage} className=" h-56 w-full" />
+                  <img
+                    src={item.coverImage}
+                    className=" h-56 w-full mix-blend-darken"
+                  />
                 </div>
                 <div className=" flex flex-col items-center py-5">
                   <h3 className=" text-sm text-gray-400 font-thin capitalize">
@@ -153,14 +149,29 @@ const NewProductSlider = () => {
                       </p>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="  opacity-0 flex flex-col py-5 items-center group-hover:opacity-100 bg-gray-900 transition-all duration-300 ease-in-out -z-20  -translate-y-10 group-hover:translate-y-0">
-                <div className="  bg-red-600 rounded-3xl  py-2 px-6 cursor-pointer transition-all duration-300 ease-in-out hover:bg-white border-2 border-red-600 ">
-                  <div className=" hidden hover:block">dlfjkd</div>
-                  <p className=" text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:text-red-600 ">
-                    ADD TO CART
-                  </p>
+                  <div className=" flex w-full  items-center justify-center  ">
+                    <h2 className=" text-sm mr-5 mt-2 font-medium">
+                      Colors :{" "}
+                    </h2>
+                    <div className=" flex gap-x-3 mt-2 justify-center">
+                      {colors?.map((item, index) => (
+                        <>
+                          {item === "black" && (
+                            <div className=" w-5 h-5 rounded-full bg-[#0a0a09]" />
+                          )}
+                          {item === "red" && (
+                            <div className=" w-5 h-5 rounded-full bg-[#5e040d]" />
+                          )}
+                          {item === "blue" && (
+                            <div className=" w-5 h-5 rounded-full bg-[#242f80]" />
+                          )}
+                          {item === "gray" && (
+                            <div className=" w-5 h-5 rounded-full bg-[#6b6a6b]" />
+                          )}
+                        </>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -170,15 +181,9 @@ const NewProductSlider = () => {
       <div className=" my-10 md:hidden">
         <Slider {...mobileSlidesettings}>
           {filtredList?.map((item, index) => (
-            <div key={index} className="  group z-20 ">
+            <div key={index} className={`  group z-20 px-2  `}>
               <div
-                // onMouseOver={() => {
-                //   setActiveItem(item?.name);
-                // }}
-                // onMouseDown={() => {
-                //   setActiveItem("");
-                // }}
-                className=" bg-white  transition-all duration-300 ease-in-out border-2 border-gray-300 hover:border-red-500 cursor-pointer "
+                className={`  bg-white  transition-all duration-300 ease-in-out border-2 border-gray-300 hover:border-red-500 cursor-pointer`}
               >
                 <div className=" px-8 mt-10">
                   <img src={item?.coverImage} className=" h-56 w-full" />

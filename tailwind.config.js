@@ -21,7 +21,7 @@ module.exports = {
       colors: {
         appBlack: "#15161d",
         secoundryBlack: "#1e1f29",
-        appRed: "#d10024",
+        appRed: "#D10024e6",
         appGray: "#b9babc",
       },
     },

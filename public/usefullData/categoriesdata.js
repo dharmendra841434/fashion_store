@@ -1,9 +1,10 @@
 export const categories = [
   "All Categories",
-  "Category1",
-  "Category2",
-  "Category3",
-  "Category4",
+  " Mens",
+  "Womens",
+  "Anime",
+  "Combos",
+  "Accessories",
 ];
 
 export const newProducts_tshirts = [

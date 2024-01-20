@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { BiSolidCreditCard } from "react-icons/bi";
 import { SiAmericanexpress } from "react-icons/si";
+import WebLogo from "../WebLogo";
 
 const CustomFooter = () => {
   return (
@@ -21,12 +22,13 @@ const CustomFooter = () => {
       <div className=" bg-appBlack border-t-2 border-appRed py-12 px-2">
         <div className=" max-w-7xl mx-auto">
           <div className=" grid grid-cols-2 lg:grid-cols-4 lg:gap-x-4 px-3">
-            <div>
-              <h1 className=" font-bold  text-white text-lg">ABOUT US</h1>
+            <div className=" ">
+              <WebLogo className="flex flex-col justify-start items-start w-full -mt-9 " />
+              {/* <h1 className=" font-bold  text-white text-lg">ABOUT US</h1>
               <p className=" text-appGray text-sm mt-5">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
                 eiusmod tempor incididunt ut.
-              </p>
+              </p> */}
               <div className="  ">
                 <div className=" flex items-center cursor-pointer group my-4 ">
                   <GiPhone className=" -rotate-90 text-appRed" />
@@ -99,7 +101,7 @@ const CustomFooter = () => {
               <SiAmericanexpress className=" text-4xl" />
             </div>
             <span className=" text-appGray text-[12px]">
-              Copyright ©2023 All rights reserved by DevOPPS
+              Copyright ©2023 All rights reserved by Dev-Trendy
             </span>
           </div>
         </div>
