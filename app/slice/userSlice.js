@@ -19,7 +19,7 @@ export const getUserDetails = createAsyncThunk(
 );
 
 const initialState = {
-  userDetails: {},
+  userDetails: null,
 };
 export const UserSlice = createSlice({
   name: "user",

@@ -115,7 +115,7 @@ const CustomHeader = () => {
                 <h3 className=" text-white text-[12px] mt-0.5">Your Cart</h3>
               </div>
               <div>
-                {userData?.length === 0 ? (
+                {userData === null ? (
                   <button
                     onClick={() => {
                       setIsOpenModel(!isOpenModel);
