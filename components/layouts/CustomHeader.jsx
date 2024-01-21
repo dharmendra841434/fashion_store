@@ -1,28 +1,44 @@
-import React, { useState } from "react";
-import { GiPhone } from "react-icons/gi";
-import { MdOutlineEmail, MdLocationOn, MdClose } from "react-icons/md";
-import { BsCurrencyRupee, BsCart3 } from "react-icons/bs";
-import { BiUser } from "react-icons/bi";
+import React, { useEffect, useState } from "react";
+import { MdClose } from "react-icons/md";
+import { BsCart3 } from "react-icons/bs";
 import CustomSearchBar from "./CustomSearchBar";
 import { FiHeart, FiMenu } from "react-icons/fi";
 import { menuOptions } from "../../public/usefullData/MenuOptions";
 import { useRouter } from "next/router";
 import CustomModal from "../CustomModal";
-import Blob1 from "../../public/blob1";
-import Blob2 from "../../public/blob2";
-import ShopingImage from "../../public/blob2";
 import WebLogo from "../WebLogo";
 import Auth from "../authantication/Auth";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../../app/slice/userSlice";
+import { FaCircleUser } from "react-icons/fa6";
 
 const CustomHeader = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isOpenModel, setIsOpenModel] = useState(false);
 
+  const userData = useSelector((state) => state.user.userDetails);
+  console.log(userData, "usersss");
+
   const path = useRouter();
+
+  const dispatch = useDispatch();
 
   //console.log(path.pathname, "path");
 
   const navigation = useRouter();
+
+  const getUser = () => {
+    let t = localStorage.getItem("accessToken");
+    if (t !== null) {
+      console.log(t, "token");
+      dispatch(getUserDetails(t));
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <div className=" relative    ">
       <CustomModal isOpen={isOpenModel}>
@@ -99,14 +115,23 @@ const CustomHeader = () => {
                 <h3 className=" text-white text-[12px] mt-0.5">Your Cart</h3>
               </div>
               <div>
-                <button
-                  onClick={() => {
-                    setIsOpenModel(!isOpenModel);
-                  }}
-                  className=" text-white bg-appRed  px-4 capitalize transition-all duration-300 ease-in-out hover:scale-105  rounded"
-                >
-                  login
-                </button>
+                {userData?.length === 0 ? (
+                  <button
+                    onClick={() => {
+                      setIsOpenModel(!isOpenModel);
+                    }}
+                    className=" text-white bg-appRed  px-4 capitalize transition-all duration-300 ease-in-out hover:scale-105  rounded"
+                  >
+                    login
+                  </button>
+                ) : (
+                  <div className=" cursor-pointer flex flex-col items-center -mt-4 h-fit w-fit border-4 border-green-500 rounded-full">
+                    <FaCircleUser className=" text-4xl text-gray-200" />
+                    {/* <h2 className=" text-white text-[12px] mt-0.5">
+                      {userData?.user?.firstName}
+                    </h2> */}
+                  </div>
+                )}
               </div>
             </div>
           </div>

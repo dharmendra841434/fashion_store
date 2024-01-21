@@ -1,1 +1,11 @@
+/* For WebKit browsers (Chrome, Safari) */
+.otpinput::-webkit-inner-spin-button,
+.otpinput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* For Firefox */
+.otpinput {
+  -moz-appearance: textfield;
+}

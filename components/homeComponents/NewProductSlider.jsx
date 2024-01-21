@@ -18,7 +18,9 @@ const NewProductSlider = () => {
   const path = useRouter();
   const filtredList = useSelector((state) => state.product.filteredProductList);
   const productList = useSelector((state) => state.product.productList);
-  const [selectedOption, setSelectedOption] = useState(newProductmenu[0].title);
+  const [selectedOption, setSelectedOption] = useState(
+    newProductmenu[0]?.title
+  );
   const [dropDown, setDropDown] = useState(false);
   const [loader, setLoader] = useState(false);
 
@@ -73,7 +75,7 @@ const NewProductSlider = () => {
 
   return (
     <div className=" mt-6">
-      <div className=" flex items-center  justify-between py-5  lg:mx-0">
+      <div className="  flex items-center  justify-between py-5  lg:mx-0">
         <h2 className=" font-bold text-gray-700  w-1/3  lg:w-auto text-2xl uppercase">
           New Products
         </h2>
@@ -106,13 +108,15 @@ const NewProductSlider = () => {
             ))}
           </div>
         </div>
-        <DropDown
-          data={newProductmenu}
-          setDropDown={setDropDown}
-          dropDown={dropDown}
-          selectedItem={selectedOption}
-          setSelectedItem={setSelectedOption}
-        />
+        <div className=" lg:hidden">
+          <DropDown
+            data={newProductmenu}
+            setDropDown={setDropDown}
+            dropDown={dropDown}
+            selectedItem={selectedOption}
+            setSelectedItem={setSelectedOption}
+          />
+        </div>
       </div>
       <div className=" mt-5 mb-10 hidden lg:block">
         <Slider {...settings}>

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "../styles/inputstyle.module.css";
+import styles from "../styles/inputstyle.module.css";
 
 const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
   const [pin1Status, setPin1Status] = useState(true);
@@ -11,7 +11,7 @@ const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
   const pin3Ref = useRef();
   const pin4Ref = useRef();
   return (
-    <div className=" grid grid-cols-4 gap-x-5">
+    <div className="  grid grid-cols-4 gap-x-5">
       <input
         type="number"
         ref={pin1Ref}
@@ -25,8 +25,8 @@ const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
             pin2Ref.current.focus();
           }
         }}
-        className=" outline-none bg-inputBg  rounded-md py-3 text-appBlack caret-appgray text-center border-inputBg  transition-all ease-in-out duration-500
-        focus:border-secoundry border-2"
+        className={`${styles.otpinput} outline-none bg-inputBg  rounded-md py-3 text-appBlack  caret-red-400 text-center border-appRed/60  transition-all ease-in-out duration-500
+        focus:border-secoundry border-2`}
       />
       <input
         type="number"
@@ -41,8 +41,8 @@ const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
             pin3Ref.current.focus();
           }
         }}
-        className=" outline-none bg-inputBg  rounded-md py-3 text-appBlack caret-appgray text-center border-inputBg  transition-all ease-in-out duration-500
-        focus:border-secoundry border-2"
+        className={`${styles.otpinput} outline-none bg-inputBg  rounded-md py-3 text-appBlack  caret-red-400 text-center border-appRed/60  transition-all ease-in-out duration-500
+        focus:border-secoundry border-2`}
       />
       <input
         type="number"
@@ -57,8 +57,8 @@ const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
             pin4Ref.current.focus();
           }
         }}
-        className=" outline-none bg-inputBg  rounded-md py-3 text-appBlack caret-appgray text-center border-inputBg  transition-all ease-in-out duration-500
-        focus:border-secoundry border-2"
+        className={`${styles.otpinput} outline-none bg-inputBg  rounded-md py-3 text-appBlack  caret-red-400 text-center border-appRed/60  transition-all ease-in-out duration-500
+        focus:border-secoundry border-2`}
       />
       <input
         type="number"
@@ -73,8 +73,8 @@ const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
             pin4Ref.current.blur();
           }
         }}
-        className=" outline-none bg-inputBg  rounded-md py-3 text-appBlack caret-appgray text-center border-inputBg  transition-all ease-in-out duration-500
-        focus:border-secoundry border-2"
+        className={`${styles.otpinput} outline-none bg-inputBg  rounded-md py-3 text-appBlack  caret-red-400 text-center border-appRed/60  transition-all ease-in-out duration-500
+        focus:border-secoundry border-2`}
       />
     </div>
   );

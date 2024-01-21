@@ -12,7 +12,7 @@ import DropDown from "../components/homeComponents/DropDown";
 const Home = () => {
   const path = useRouter();
   const [isOpne, setIsOpne] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(menuOptions[0].title);
+  const [selectedOption, setSelectedOption] = useState(menuOptions[0]?.title);
   return (
     <div className=" pb-6">
       <div className=" max-w-7xl mx-auto px-3 ">

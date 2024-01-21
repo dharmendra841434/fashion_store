@@ -4,6 +4,8 @@ import Blob1 from "../../public/blob1";
 import WebLogo from "../WebLogo";
 import axios from "axios";
 import Otp from "./Otp";
+import { toast } from "react-toastify";
+import CircleLoader from "./CircleLoader";
 
 const Auth = ({ setOpenModel }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,19 +16,43 @@ const Auth = ({ setOpenModel }) => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [mobileNumberError, setMobileNumberError] = useState(false);
   const [OTPStatus, setOTPStatus] = useState(false);
+  const [otpLoader, setOtpLoader] = useState(false);
 
   const login = async () => {
-    console.log(mobileNumber, "mob");
+    setOtpLoader(true);
     await axios
-      .post(`${process.env.NEXT_PUBLIC_BASE_UR}/user/login`, {
-        phone: Number(mobileNumber),
+      .post(`${process.env.NEXT_PUBLIC_BASE_UR}/user/otp-generate`, {
+        phone: mobileNumber,
       })
       .then((res) => {
         console.log(res.data);
+        // Serialize the object to a JSON string
+        let phoneData = JSON.stringify(res?.data?.data);
+        // Store the serialized object in localStorage
+        localStorage.setItem("otpDetails", phoneData);
         setOTPStatus(true);
+        setOTPStatus(true);
+        toast.success("Otp sent to your mobile", {
+          theme: "colored",
+          position: "top-center",
+          autoClose: 1000,
+          progress: false,
+          hideProgressBar: true,
+          //style: { backgroundColor: "green" },
+        });
+        setOtpLoader(false);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setOtpLoader(false);
+        console.log(error);
+        toast.error(error?.response?.data?.message, {
+          theme: "colored",
+          position: "top-center",
+          autoClose: 1000,
+          progress: false,
+          hideProgressBar: true,
+          //style: { backgroundColor: "green" },
+        });
       });
   };
 
@@ -37,6 +63,7 @@ const Auth = ({ setOpenModel }) => {
         <MdClose
           onClick={() => {
             setOpenModel(false);
+            setOTPStatus(false);
           }}
           className=" text-gray-900 cursor-pointer z-50 absolute top-3 right-3 text-3xl"
         />
@@ -65,14 +92,20 @@ const Auth = ({ setOpenModel }) => {
                         <span className=" text-blue-600">Terms of Use</span> and{" "}
                         <span className=" text-blue-600">Privacy Policy</span>.
                       </span>
-                      <button
-                        onClick={() => {
-                          login();
-                        }}
-                        className=" bg-appRed text-white font-medium mt-8 py-2 transition-all duration-300 ease-in-out hover:bg-appRed/80"
-                      >
-                        Request Otp
-                      </button>
+                      <div className=" flex flex-col items-center pt-8 ">
+                        {otpLoader ? (
+                          <CircleLoader />
+                        ) : (
+                          <button
+                            onClick={() => {
+                              login();
+                            }}
+                            className=" bg-appRed text-white font-medium  rounded-md w-full py-2 transition-all duration-300 ease-in-out hover:bg-appRed/80"
+                          >
+                            Request Otp
+                          </button>
+                        )}
+                      </div>
                       <span className=" text-sm text-appBlack font-medium text-center mt-8">
                         New to Dev-Trendy ?{" "}
                         <span
@@ -88,7 +121,10 @@ const Auth = ({ setOpenModel }) => {
                   </div>
                 ) : (
                   <div>
-                    <Otp />
+                    <Otp
+                      setModelState={setOpenModel}
+                      setPageStatus={setOTPStatus}
+                    />
                   </div>
                 )}
               </>

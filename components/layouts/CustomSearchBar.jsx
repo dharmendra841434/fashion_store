@@ -7,7 +7,7 @@ const CustomSearchBar = () => {
   const [dropDown, setDropDown] = useState(false);
   const [searchedItem, setSearchedItem] = useState([]);
 
-  console.log(searchedItem, "iterm");
+  //console.log(searchedItem, "iterm");
 
   return (
     <div className="  flex items-center bg-white w-full h-fit mx-2 md:mx-0 md:w-[100%]  rounded-3xl overflow-hidden ">
