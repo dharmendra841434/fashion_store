@@ -42,16 +42,7 @@ const CustomHeader = () => {
 
   const loginNow = async () => {
     await axios
-      .post(
-        "https://dev-trendy-store-api.vercel.app/api/v1/user/login",
-        {
-          phone: "7761895776",
-          countryCode: "+91",
-        },
-        {
-          auth: true,
-        }
-      )
+      .get("https://dev-trendy-store-api.vercel.app/set-cookies")
       .then((res) => {
         console.log(res?.data, "response");
       })
