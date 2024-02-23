@@ -77,7 +77,7 @@ const CustomHeader = () => {
   // };
 
   return (
-    <div className="relative ">
+    <div className="sticky top-0 z-50 ">
       <CustomModal isOpen={isOpenModel}>
         <Auth setOpenModel={setIsOpenModel} />
       </CustomModal>
@@ -125,9 +125,9 @@ const CustomHeader = () => {
       </div> */}
       <div className="hidden lg:block">
         <div className="border-b-2 bg-appBlack border-appRed">
-          <div className="flex items-center justify-between px-5 py-6 mx-auto max-w-7xl">
+          <div className="flex items-center justify-between px-2 py-6 mx-auto max-w-7xl">
             <WebLogo className="flex items-center" />
-            <div className="  w-[36rem] relative">
+            <div className="  w-[39rem] relative">
               <CustomSearchBar />
             </div>
             <div className="flex items-center gap-x-3">
@@ -168,7 +168,13 @@ const CustomHeader = () => {
                     </h3>
                   </button>
                 ) : (
-                  <div className="flex-col items-center justify-center ">
+                  <button
+                    name="profile"
+                    onClick={() => {
+                      navigation.push("/profile");
+                    }}
+                    className="flex-col items-center justify-center "
+                  >
                     <img
                       src="/images/user.png"
                       className="w-10 h-10 ml-[25%]"
@@ -179,7 +185,7 @@ const CustomHeader = () => {
                         18
                       )}
                     </h3>
-                  </div>
+                  </button>
                 )}
               </div>
             </div>
@@ -193,7 +199,59 @@ const CustomHeader = () => {
         <div className="flex justify-center w-full py-4 ">
           <CustomSearchBar />
         </div>
-        <div className="flex items-center justify-end mx-3 my-3 gap-x-12">
+        <div className="grid grid-cols-4 py-4 pl-2 gap-x-1 ">
+          {/* <div className="-mt-3 ">
+            {userData === null ? (
+              <button
+                onClick={() => {
+                  // otp();
+                  // loginNow();
+                  setIsOpenModel(!isOpenModel);
+                }}
+                className="flex flex-col items-center "
+                // className="px-4 text-white capitalize transition-all duration-300 ease-in-out rounded bg-appRed hover:scale-105"
+              >
+                <FaCircleUser className="text-3xl text-white " />
+                <h3 className=" text-white text-[12px] mt-0.5">Login Now</h3>
+              </button>
+            ) : (
+              <div className="flex-col items-center justify-center ">
+                <img src="/images/user.png" className="w-10 h-10 ]" />
+                <h3 className=" text-white text-[12px] mt-0.5 capitalize">
+                  {sortString(
+                    `${userData?.firstName} ${userData?.lastName}`,
+                    10
+                  )}
+                </h3>
+              </div>
+            )}
+          </div> */}
+          <div className="-mt-4 ">
+            {userData === null ? (
+              <button
+                onClick={() => {
+                  // otp();
+                  // loginNow();
+                  setIsOpenModel(!isOpenModel);
+                }}
+                className="flex flex-col items-center "
+                // className="px-4 text-white capitalize transition-all duration-300 ease-in-out rounded bg-appRed hover:scale-105"
+              >
+                <FaCircleUser className="text-3xl text-white " />
+                <h3 className=" text-white text-[12px] mt-0.5">Login Now</h3>
+              </button>
+            ) : (
+              <div className="flex-col items-center justify-center ">
+                <img src="/images/user.png" className="w-10 h-10 ml-[25%]" />
+                <h3 className=" text-white text-[12px] mt-0.5  capitalize">
+                  {sortString(
+                    `${userData?.firstName} ${userData?.lastName}`,
+                    14
+                  )}
+                </h3>
+              </div>
+            )}
+          </div>
           <div className="flex flex-col items-center ">
             <div className="relative cursor-pointer ">
               <FiHeart className="text-xl text-white " />

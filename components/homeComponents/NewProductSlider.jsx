@@ -13,6 +13,7 @@ import {
   setfiltredList,
 } from "../../app/slice/productSlice";
 import DropDown from "./DropDown";
+import Rating from "./Ratings";
 
 const NewProductSlider = () => {
   const path = useRouter();
@@ -59,19 +60,17 @@ const NewProductSlider = () => {
   const filtreBasedOnMenu = (menuType) => {
     var list = [...productList];
     //console.log(list, "jhyiuju");
-    if (menuType === "Hoodies") {
-      let hoodies = list?.filter((item, index) => item?.category === "Hoodies");
+    if (menuType === "hoodies") {
+      let hoodies = list?.filter((item, index) => item?.type === "hoodies");
       // console.log(hoodies, "hood");
       dispatch(setfiltredList(hoodies));
     }
-    if (menuType === "T-Shirt") {
-      let hoodies = list?.filter((item, index) => item?.category === "T-Shirt");
+    if (menuType === "t-shirt") {
+      let tshirts = list?.filter((item, index) => item?.type === "t-shirt");
       // console.log(hoodies, "hood");
-      dispatch(setfiltredList(hoodies));
+      dispatch(setfiltredList(tshirts));
     }
   };
-
-  const colors = ["black", "red", "blue", "gray"];
 
   return (
     <div className="mt-6 ">
@@ -85,7 +84,7 @@ const NewProductSlider = () => {
               <div key={index} className="cursor-pointer group">
                 <h4
                   onClick={() => {
-                    filtreBasedOnMenu(item.title);
+                    filtreBasedOnMenu(item.title?.toLocaleLowerCase());
                     setActiveItem(item.title);
                   }}
                   className={` font-medium ${
@@ -123,13 +122,13 @@ const NewProductSlider = () => {
           {filtredList?.map((item, index) => (
             <div key={item?.product_name} className="z-20 px-1 py-4 group">
               <div className="relative transition-all duration-300 ease-in-out bg-white border-2 border-gray-300 cursor-pointer hover:border-red-500 hover:-translate-y-3">
-                <div className="absolute px-1 text-sm border top-2 right-2 text-appRed border-appRed">
+                <div className="absolute right-0 px-1 text-sm text-white border top-2 bg-appRed border-appRed">
                   {item?.discount}%Off
                 </div>
                 <div className="px-8 mt-10 ">
                   <img
                     src={item.coverImage}
-                    className="w-full h-56 mix-blend-darken"
+                    className="w-full h-44 mix-blend-darken"
                   />
                 </div>
                 <div className="flex flex-col items-center py-5 ">
@@ -153,28 +152,24 @@ const NewProductSlider = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-center w-full ">
-                    <h2 className="mt-2 mr-5 text-sm font-medium ">
-                      Colors :{" "}
-                    </h2>
-                    <div className="flex justify-center mt-2 gap-x-3">
-                      {colors?.map((item, index) => (
-                        <div key={index}>
-                          {item === "black" && (
-                            <div className=" w-5 h-5 rounded-full bg-[#0a0a09]" />
-                          )}
-                          {item === "red" && (
-                            <div className=" w-5 h-5 rounded-full bg-[#5e040d]" />
-                          )}
-                          {item === "blue" && (
-                            <div className=" w-5 h-5 rounded-full bg-[#242f80]" />
-                          )}
-                          {item === "gray" && (
-                            <div className=" w-5 h-5 rounded-full bg-[#6b6a6b]" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                  <Rating value={4} />
+                  <div className="flex justify-center mt-2 mt-3 translate-x-14 gap-x-3">
+                    {item?.images?.map((item, index) => (
+                      <div
+                        key={index}
+                        className={`border-2 border-gray-500 rounded-full bg-white ${
+                          index == 1
+                            ? "-translate-x-8"
+                            : index == 2
+                            ? "-translate-x-16"
+                            : index == 3
+                            ? " -translate-x-24"
+                            : ""
+                        }`}
+                      >
+                        <img src={item} className="w-10 h-10 rounded-full" />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

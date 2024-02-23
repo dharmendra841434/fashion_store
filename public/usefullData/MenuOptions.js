@@ -4,24 +4,28 @@ export const menuOptions = [
     route: "/",
   },
   {
-    title: "Mens",
-    route: "/hot deal",
+    title: "developers",
+    route: "/developers",
   },
   {
-    title: "Womens",
-    route: "/categories",
+    title: "designers",
+    route: "/designers",
   },
   {
-    title: "Anime",
-    route: "/laptops",
+    title: "traders",
+    route: "/traders",
   },
   {
-    title: "Combos",
-    route: "/smartphones",
+    title: "crickters",
+    route: "/crickters",
   },
   {
-    title: "Accessories",
-    route: "/accessories",
+    title: "teachers",
+    route: "/teachers",
+  },
+  {
+    title: "editors",
+    route: "/editors",
   },
 ];
 
