@@ -8,7 +8,7 @@ export const getUserDetails = createAsyncThunk(
       //console.log(values, "this is id");
       const userData = await userAPI.getUser(values);
       // console.log(userData, "this is users");
-      dispatch(setUserDetails(userData));
+      dispatch(setUserDetails(userData?.user));
       setIsLoggedIn(true);
     } catch (error) {
       if (error.response) {

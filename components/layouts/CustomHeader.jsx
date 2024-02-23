@@ -175,7 +175,7 @@ const CustomHeader = () => {
                     />
                     <h3 className=" text-white text-[12px] mt-0.5 capitalize">
                       {sortString(
-                        `${userData?.user?.firstName} ${userData?.user?.lastName}`,
+                        `${userData?.firstName} ${userData?.lastName}`,
                         18
                       )}
                     </h3>
