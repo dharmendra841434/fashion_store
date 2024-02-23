@@ -20,7 +20,7 @@ const CustomHeader = () => {
   const [isOpenModel, setIsOpenModel] = useState(false);
 
   const userData = useSelector((state) => state.user.userDetails);
-  console.log(userData, "usersss");
+  //console.log(userData, "usersss");
 
   const path = useRouter();
 
