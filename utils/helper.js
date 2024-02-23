@@ -18,3 +18,17 @@ export const colors = {
   green404: "#99B080",
   gray: "#A4AB9D",
 };
+
+export function generateOTP() {
+  // Generate a random 4-digit number
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  return otp;
+}
+
+export function sortString(inputString, maxLength) {
+  if (inputString?.length > maxLength) {
+    return inputString?.substring(0, maxLength - 3) + "...";
+  } else {
+    return inputString;
+  }
+}

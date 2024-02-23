@@ -7,12 +7,10 @@ export const allProductsRequest = createAsyncThunk(
     try {
       dispatch(setListLoader(true));
       const productsData = await productAPI.getAllProduct();
-      console.log(productsData, "all list");
+      //  console.log(productsData, "all list");
       let tshirt = productsData.data;
-      let filtered = tshirt.filter(
-        (item, index) => item.category === "T-Shirt"
-      );
-      console.log(filtered, "filtered");
+      let filtered = tshirt.filter((item, index) => item.type === "t-shirt");
+      // console.log(filtered, "filtered");
       dispatch(setProductList(tshirt));
       dispatch(setfiltredList(filtered));
       dispatch(setListLoader(false));

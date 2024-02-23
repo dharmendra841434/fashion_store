@@ -3,17 +3,17 @@ import { NextResponse } from "next/server";
 // This function can be marked `async` if using `await` inside
 export function middleware(request) {
   const path = request.nextUrl.pathname;
-  console.log(request?.cookies, "this is path");
+  // console.log(request?.cookies, "this is path");
   const isPublicPath = path === "/";
 
-  let token = request.cookies.get("accessToken")?.value;
-  console.log(token, "token");
-  if (isPublicPath && token) {
-    return NextResponse.redirect(new URL("/cart", request.url));
-  }
-  if (!isPublicPath && !token) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+  // let token = request.cookies.get("accessToken")?.value;
+  // console.log(token, "token");
+  // if (isPublicPath && token) {
+  //   return NextResponse.redirect(new URL("/", request.url));
+  // }
+  // if (!isPublicPath && !token) {
+  //   return NextResponse.redirect(new URL("/", request.url));
+  // }
 
   //console.log("run before render");
 

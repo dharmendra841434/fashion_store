@@ -10,8 +10,10 @@ import WebLogo from "../WebLogo";
 import Auth from "../authantication/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../app/slice/userSlice";
-import { FaCircleUser } from "react-icons/fa6";
+import { FaCircleUser, FaUser } from "react-icons/fa6";
+//import { FaUserCircle } from "react-icons/fa";
 import axios from "axios";
+import { sortString } from "../../utils/helper";
 
 const CustomHeader = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -31,7 +33,7 @@ const CustomHeader = () => {
   const getUser = () => {
     let t = localStorage.getItem("accessToken");
     if (t !== null) {
-      console.log(t, "token");
+      //console.log(t, "token");
       dispatch(getUserDetails(t));
     }
   };
@@ -40,25 +42,39 @@ const CustomHeader = () => {
     getUser();
   }, []);
 
-  const loginNow = async () => {
-    await axios
-      .post(
-        "https://dev-trendy-store-api.vercel.app/api/v1/user/login",
-        {
-          phone: "7761895776",
-          countryCode: "+91",
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log(res?.data, "response");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const loginNow = async () => {
+  //   await axios
+  //     .post(
+  //       "/api/login",
+  //       {
+  //         phone: "7761895776",
+  //         countryCode: "+91",
+  //       },
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res?.data, "response");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // const otp = async () => {
+  //   const token = localStorage.getItem("accessToken");
+
+  //   console.log(token, "this is token");
+  //   await axios
+  //     .get("/api/getUserData/ixsixmosidwexiwdwd")
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div className="relative ">
@@ -135,23 +151,34 @@ const CustomHeader = () => {
                 </div>
                 <h3 className=" text-white text-[12px] mt-0.5">Your Cart</h3>
               </div>
-              <div>
+              <div className="-mt-3 ">
                 {userData === null ? (
                   <button
                     onClick={() => {
-                      loginNow();
-                      // setIsOpenModel(!isOpenModel);
+                      // otp();
+                      // loginNow();
+                      setIsOpenModel(!isOpenModel);
                     }}
-                    className="px-4 text-white capitalize transition-all duration-300 ease-in-out rounded bg-appRed hover:scale-105"
+                    className="flex flex-col items-center "
+                    // className="px-4 text-white capitalize transition-all duration-300 ease-in-out rounded bg-appRed hover:scale-105"
                   >
-                    login
+                    <FaCircleUser className="text-3xl text-white " />
+                    <h3 className=" text-white text-[12px] mt-0.5">
+                      Login Now
+                    </h3>
                   </button>
                 ) : (
-                  <div className="flex flex-col items-center -mt-4 border-4 border-green-500 rounded-full cursor-pointer h-fit w-fit">
-                    <FaCircleUser className="text-4xl text-gray-200 " />
-                    {/* <h2 className=" text-white text-[12px] mt-0.5">
-                      {userData?.user?.firstName}
-                    </h2> */}
+                  <div className="flex-col items-center justify-center ">
+                    <img
+                      src="/images/user.png"
+                      className="w-10 h-10 ml-[25%]"
+                    />
+                    <h3 className=" text-white text-[12px] mt-0.5 capitalize">
+                      {sortString(
+                        `${userData?.user?.firstName} ${userData?.user?.lastName}`,
+                        18
+                      )}
+                    </h3>
                   </div>
                 )}
               </div>

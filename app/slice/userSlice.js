@@ -5,10 +5,11 @@ export const getUserDetails = createAsyncThunk(
   "user-details",
   async (values, { dispatch, rejectWithValue }) => {
     try {
-      console.log(values, "this is id");
+      //console.log(values, "this is id");
       const userData = await userAPI.getUser(values);
-      console.log(userData, "this is users");
+      // console.log(userData, "this is users");
       dispatch(setUserDetails(userData));
+      setIsLoggedIn(true);
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message, "AllProductRequestError");
@@ -20,6 +21,7 @@ export const getUserDetails = createAsyncThunk(
 
 const initialState = {
   userDetails: null,
+  isLoggedIn: false,
 };
 export const UserSlice = createSlice({
   name: "user",
@@ -28,8 +30,11 @@ export const UserSlice = createSlice({
     setUserDetails: (state, action) => {
       state.userDetails = action.payload;
     },
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
   },
 });
-export const { setUserDetails } = UserSlice.actions;
+export const { setUserDetails, setIsLoggedIn } = UserSlice.actions;
 
 export default UserSlice.reducer;

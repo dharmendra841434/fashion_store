@@ -1,17 +1,29 @@
 import React, { useState, useRef } from "react";
 import styles from "../styles/inputstyle.module.css";
 
-const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
+const OtpInput = ({
+  setPin1,
+  setPin2,
+  setPin3,
+  setPin4,
+  setPin5,
+  setPin6,
+  SetStatus,
+}) => {
   const [pin1Status, setPin1Status] = useState(true);
   const [pin2Status, setPin2Status] = useState(false);
   const [pin3Status, setPin3Status] = useState(false);
   const [pin4Status, setPin4Status] = useState(false);
+  const [pin5Status, setPin5Status] = useState(false);
+  const [pin6Status, setPin6Status] = useState(false);
   const pin1Ref = useRef();
   const pin2Ref = useRef();
   const pin3Ref = useRef();
   const pin4Ref = useRef();
+  const pin5Ref = useRef();
+  const pin6Ref = useRef();
   return (
-    <div className="  grid grid-cols-4 gap-x-5">
+    <div className="grid grid-cols-6 gap-x-2">
       <input
         type="number"
         ref={pin1Ref}
@@ -70,7 +82,39 @@ const OtpInput = ({ setPin1, setPin2, setPin3, setPin4, SetStatus }) => {
           setPin4(p1.target.value);
           SetStatus(false);
           if (p1.target.value !== "") {
-            pin4Ref.current.blur();
+            pin5Ref.current.focus();
+          }
+        }}
+        className={`${styles.otpinput} outline-none bg-inputBg  rounded-md py-3 text-appBlack  caret-red-400 text-center border-appRed/60  transition-all ease-in-out duration-500
+        focus:border-secoundry border-2`}
+      />
+      <input
+        type="number"
+        ref={pin5Ref}
+        autoFocus={pin5Status}
+        onFocus={() => setPin5Status(true)}
+        onBlur={() => setPin5Status(false)}
+        onChange={(p1) => {
+          setPin5(p1.target.value);
+          SetStatus(false);
+          if (p1.target.value !== "") {
+            pin6Ref.current.focus();
+          }
+        }}
+        className={`${styles.otpinput} outline-none bg-inputBg  rounded-md py-3 text-appBlack  caret-red-400 text-center border-appRed/60  transition-all ease-in-out duration-500
+        focus:border-secoundry border-2`}
+      />
+      <input
+        type="number"
+        ref={pin6Ref}
+        autoFocus={pin6Status}
+        onFocus={() => setPin6Status(true)}
+        onBlur={() => setPin6Status(false)}
+        onChange={(p1) => {
+          setPin6(p1.target.value);
+          SetStatus(false);
+          if (p1.target.value !== "") {
+            pin6Ref.current.blur();
           }
         }}
         className={`${styles.otpinput} outline-none bg-inputBg  rounded-md py-3 text-appBlack  caret-red-400 text-center border-appRed/60  transition-all ease-in-out duration-500

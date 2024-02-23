@@ -21,8 +21,9 @@ const Auth = ({ setOpenModel }) => {
   const login = async () => {
     setOtpLoader(true);
     await axios
-      .post(`${process.env.NEXT_PUBLIC_BASE_UR}/user/otp-generate`, {
-        phone: mobileNumber,
+      .post(`/api/sendOtp`, {
+        phone: `${mobileNumber}`,
+        countryCode: "+91",
       })
       .then((res) => {
         console.log(res.data);
@@ -57,137 +58,83 @@ const Auth = ({ setOpenModel }) => {
   };
 
   return (
-    <div className=" w-full flex justify-center lg:py-16 xl:py-24">
-      <div className=" hidden lg:block relative bg-red-300 w-[90%] xl:w-[70%] rounded-md cursor-auto overflow-hidden">
-        <Blob1 className=" opacity-50 z-40" />
+    <div className="flex justify-center w-full lg:py-16 xl:py-24">
+      <div className=" hidden lg:block relative bg-red-300 w-[90%] lg:h-[65%] xl:h-auto xl:w-[70%] rounded-md cursor-auto overflow-hidden">
+        <Blob1 className="z-40 opacity-50 " />
         <MdClose
           onClick={() => {
             setOpenModel(false);
             setOTPStatus(false);
           }}
-          className=" text-gray-900 cursor-pointer z-50 absolute top-3 right-3 text-3xl"
+          className="absolute z-50 text-3xl text-gray-900 cursor-pointer top-3 right-3"
         />
-        <div className=" flex  absolute top-0 left-0 right-0 bottom-0 p-6 ">
+        <div className="absolute top-0 bottom-0 left-0 right-0 flex p-6 ">
           <div className=" w-[40%]  z-10 ">
             <WebLogo className="flex items-center" />
-
-            {isLogin ? (
-              <>
-                {!OTPStatus ? (
-                  <div className=" ">
-                    <h3 className=" mt-10 text-center font-bold text-2xl text-gray-900">
-                      Welcome Back👏
-                    </h3>
-                    <div className=" ml-3 mt-7 flex flex-col">
-                      <p className="  font-semibold">Enter Mobile Number</p>
-                      <input
-                        className=" outline-none border-b-2 border-gray-800 placeholder:text-gray-800 my-3 text-sm bg-transparent"
-                        placeholder="+91XXXXXXXXX"
-                        onChange={(e) => {
-                          setMobileNumber(e.target.value);
-                        }}
-                      />
-                      <span className=" text-sm font-thin mt-3">
-                        By continuing, you agree to Dev-Trendy's{" "}
-                        <span className=" text-blue-600">Terms of Use</span> and{" "}
-                        <span className=" text-blue-600">Privacy Policy</span>.
-                      </span>
-                      <div className=" flex flex-col items-center pt-8 ">
-                        {otpLoader ? (
-                          <CircleLoader />
-                        ) : (
-                          <button
-                            onClick={() => {
-                              login();
-                            }}
-                            className=" bg-appRed text-white font-medium  rounded-md w-full py-2 transition-all duration-300 ease-in-out hover:bg-appRed/80"
-                          >
-                            Request Otp
-                          </button>
-                        )}
-                      </div>
-                      <span className=" text-sm text-appBlack font-medium text-center mt-8">
+            <>
+              {!OTPStatus ? (
+                <div className="">
+                  <h3 className="mt-10 text-2xl font-bold text-center text-gray-900 ">
+                    Welcome Back👏
+                  </h3>
+                  <div className="flex flex-col ml-3 mt-7">
+                    <p className="font-semibold ">Enter Mobile Number</p>
+                    <input
+                      className="my-3 text-sm bg-transparent border-b-2 border-gray-800 outline-none placeholder:text-gray-800"
+                      placeholder="+91XXXXXXXXX"
+                      onChange={(e) => {
+                        setMobileNumber(e.target.value);
+                      }}
+                    />
+                    <span className="mt-3 text-sm font-thin ">
+                      By continuing, you agree to Dev-Trendy's{" "}
+                      <span className="text-blue-600 ">Terms of Use</span> and{" "}
+                      <span className="text-blue-600 ">Privacy Policy</span>.
+                    </span>
+                    <div className="flex flex-col items-center pt-8 ">
+                      {otpLoader ? (
+                        <CircleLoader />
+                      ) : (
+                        <button
+                          onClick={() => {
+                            login();
+                          }}
+                          className="w-full py-2 font-medium text-white transition-all duration-300 ease-in-out rounded-md bg-appRed hover:bg-appRed/80"
+                        >
+                          Request Otp
+                        </button>
+                      )}
+                    </div>
+                    {/* <span className="mt-8 text-sm font-medium text-center text-appBlack">
                         New to Dev-Trendy ?{" "}
                         <span
                           onClick={() => {
                             setIsLogin(!isLogin);
                           }}
-                          className=" text-appRed cursor-pointer"
+                          className="cursor-pointer text-appRed"
                         >
                           Register
                         </span>
-                      </span>
-                    </div>
+                      </span> */}
                   </div>
-                ) : (
-                  <div>
-                    <Otp
-                      setModelState={setOpenModel}
-                      setPageStatus={setOTPStatus}
-                    />
-                  </div>
-                )}
-              </>
-            ) : (
-              <div>
-                <h3 className="  text-center font-bold text-2xl text-gray-900">
-                  Register Now 🛒
-                </h3>
-                <div className=" ml-3 mt-4 flex flex-col">
-                  <p className="  font-semibold">First name</p>
-                  <input
-                    className=" outline-none border-b-2 border-gray-800 placeholder:text-gray-800 my-3 text-sm bg-transparent"
-                    placeholder="Enter first name"
-                    onChange={(e) => {
-                      setFirstName(e.target.value);
-                    }}
-                  />
-                  <p className="  font-semibold">Last name</p>
-                  <input
-                    className=" outline-none border-b-2 border-gray-800 placeholder:text-gray-800 my-3 text-sm bg-transparent"
-                    placeholder="Enter last name"
-                    onChange={(e) => {
-                      setLastName(e.target.value);
-                    }}
-                  />
-                  <p className="  font-semibold">Mobile Number</p>
-                  <input
-                    className=" outline-none border-b-2 border-gray-800 placeholder:text-gray-800 my-3 text-sm bg-transparent"
-                    placeholder="Enter mobile number"
-                    onChange={(e) => {
-                      setMobileNumber(e.target.value);
-                    }}
-                  />
-                  <span className=" text-sm font-thin mt-1">
-                    By continuing, you agree to Dev-Trendy's{" "}
-                    <span className=" text-blue-600">Terms of Use</span> and{" "}
-                    <span className=" text-blue-600">Privacy Policy</span>.
-                  </span>
-                  <button className=" bg-appRed text-white font-medium mt-3 py-2 transition-all duration-300 ease-in-out hover:bg-appRed/80">
-                    Register
-                  </button>
-                  <span className=" text-sm text-appBlack font-medium text-center mt-3">
-                    Already a user ?{" "}
-                    <span
-                      onClick={() => {
-                        setIsLogin(!isLogin);
-                      }}
-                      className=" text-appRed cursor-pointer"
-                    >
-                      Login
-                    </span>
-                  </span>
                 </div>
-              </div>
-            )}
+              ) : (
+                <div>
+                  <Otp
+                    setModelState={setOpenModel}
+                    setPageStatus={setOTPStatus}
+                  />
+                </div>
+              )}
+            </>
           </div>
           <div className=" w-[60%] relative z-10 ">
-            <img src="/images/shop.png" className=" z-20" />
+            <img src="/images/shop.png" className="z-20 " />
           </div>
         </div>
         <img
           src="/images/shap2.png"
-          className=" absolute opacity-30 left-10 top-0 "
+          className="absolute top-0 opacity-30 left-10"
         />
         <img
           src="/images/shap3.png"
