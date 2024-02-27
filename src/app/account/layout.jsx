@@ -9,6 +9,12 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIsLoggedIn,
+  setUserAddress,
+  setUserDetails,
+} from "@/redux/slice/userSlice";
 
 const AccountLayout = ({ children }) => {
   const userData = useSelector((state) => state.user?.userDetails);
@@ -16,6 +22,8 @@ const AccountLayout = ({ children }) => {
 
   const navigation = useRouter();
   const pathname = usePathname();
+
+  const dispatch = useDispatch();
   console.log(pathname);
   const accountSettingOptions = [
     { title: "Personal Information", route: "/account" },
@@ -59,6 +67,8 @@ const AccountLayout = ({ children }) => {
     await axios
       .delete(`/api/user/logout`)
       .then((res) => {
+        navigation.push("/");
+
         toast.success(res.data?.message, {
           theme: "colored",
           position: "top-center",
@@ -67,7 +77,9 @@ const AccountLayout = ({ children }) => {
           hideProgressBar: true,
           //style: { backgroundColor: "green" },
         });
-        navigation.push("/");
+        dispatch(setUserDetails(null));
+        dispatch(setUserAddress([]));
+        dispatch(setIsLoggedIn(false));
       })
       .catch((error) => {
         toast.error(error?.response?.data?.message, {
