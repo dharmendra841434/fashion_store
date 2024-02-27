@@ -6,7 +6,6 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { FaShoppingBag, FaUser, FaWallet } from "react-icons/fa";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
