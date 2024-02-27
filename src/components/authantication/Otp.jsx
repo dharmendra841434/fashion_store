@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import OtpInput from "../OtpInput";
 import Loader2 from "./Loader2";
-import { setIsLoggedIn, setUserDetails } from "@/redux/slice/userSlice";
+import {
+  setIsLoggedIn,
+  setUserAddress,
+  setUserDetails,
+} from "@/redux/slice/userSlice";
+import { userAPI } from "@/redux/api/userAPI";
 
 const Otp = ({ setModelState, setPageStatus }) => {
   const [pin1, setPin1] = useState("");
@@ -49,11 +54,15 @@ const Otp = ({ setModelState, setPageStatus }) => {
             withCredentials: true,
           }
         )
-        .then((res) => {
+        .then(async (res) => {
           console.log(res.data);
           dispatch(setUserDetails(res.data?.data));
+          const addreses = await userAPI.getUserAddress(
+            res.data?.data?.user?._id
+          );
+          dispatch(setUserAddress(addreses?.addresses));
           dispatch(setIsLoggedIn(true));
-          localStorage.setItem("accessToken", res.data?.accessToken);
+          // localStorage.setItem("accessToken", res.data?.accessToken);
           localStorage.removeItem("otpDetails");
           setModelState(false);
           setLoader(false);

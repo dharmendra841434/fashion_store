@@ -15,6 +15,7 @@ module.exports = {
         secoundryBlack: "#1e1f29",
         appRed: "#D10024e6",
         appGray: "#b9babc",
+        appTextBlack: "#252525",
       },
       boxShadow: {
         dpShadow: "0px 4px 17px -4px rgba(0,0,0,0.2)",

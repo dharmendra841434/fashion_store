@@ -1,3 +1,5 @@
+"use client";
+
 import axios from "axios";
 
 export const userAPI = {
@@ -5,6 +7,29 @@ export const userAPI = {
     return await axios
       .get(`${process.env.NEXT_PUBLIC_BASE_UR}/user/${id}`)
       .then((res) => res.data);
+  },
+  getUserAddress: async (id) => {
+    return await axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_UR}/user/addresses/${id}`)
+      .then((res) => res.data);
+  },
+  getAllStates: async (data) => {
+    return await axios
+      .post(`${process.env.NEXT_PUBLIC_BASE_UR}/user/get-states`, data)
+      .then((res) => res.data);
+  },
+  updateUserDetails: async (data) => {
+    const { id, body } = data;
+    return await axios
+      .post(`${process.env.NEXT_PUBLIC_BASE_UR}/user/update/${id}`, body)
+      .then((res) => res.data)
+      .catch((error) => error);
+  },
+  saveUserAddress: async (data) => {
+    return await axios
+      .post(`${process.env.NEXT_PUBLIC_BASE_UR}/user/save-address`, data)
+      .then((res) => res.data)
+      .catch((error) => error);
   },
   // getRefreshToken: async (value) => {
   //   return await axios

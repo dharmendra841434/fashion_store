@@ -50,7 +50,7 @@ export async function POST(request) {
 
     response.cookies.set("accessToken", accessToken2, {
       httpOnly: true,
-      maxAge: 60 * 24 * 30,
+      maxAge: 7 * 24 * 60 * 60,
       SameSite: "Strict",
     });
     return response;

@@ -33,7 +33,7 @@ const CustomSearchBar = () => {
       <button className=" bg-appRed h-full py-3 font-semibold text-white pl-4 md:pl-8  px-4 lg:px-4 p lg:py-3 text-[13px] lg:text-sm ">
         Search
       </button>
-      {/* {dropDown && (
+      {dropDown && (
         <div className=" absolute bg-white top-full mt-1 right-0 left-0 h-[22rem] shadow-lg rounded-md overflow-hidden z-50  ">
           {searchedItem?.length === 0 ? (
             <div>
@@ -47,7 +47,7 @@ const CustomSearchBar = () => {
                   onClick={() => {
                     setDropDown(false);
                   }}
-                  className="flex items-center justify-between px-5 py-1 text-sm transition-all duration-300 ease-in-out cursor-pointer  hover:scale-105"
+                  className="flex items-center justify-between px-5 py-1 text-sm transition-all duration-300 ease-in-out cursor-pointer hover:scale-105"
                 >
                   <h2>{item}</h2>
                   <HiMiniLink />
@@ -56,7 +56,7 @@ const CustomSearchBar = () => {
             </>
           )}
         </div>
-      )} */}
+      )}
     </div>
   );
 };

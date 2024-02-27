@@ -7,8 +7,10 @@ export const getUserDetails = createAsyncThunk(
     try {
       //console.log(values, "this is id");
       const userData = await userAPI.getUser(values);
-      // console.log(userData, "this is users");
+      console.log(userData?.user?._id, "this is users");
+      const addreses = await userAPI.getUserAddress(userData?.user?._id);
       dispatch(setUserDetails(userData?.user));
+      dispatch(setUserAddress(addreses?.addresses));
       setIsLoggedIn(true);
     } catch (error) {
       if (error.response) {
@@ -22,6 +24,7 @@ export const getUserDetails = createAsyncThunk(
 const initialState = {
   userDetails: null,
   isLoggedIn: false,
+  userAddresses: [],
 };
 export const UserSlice = createSlice({
   name: "user",
@@ -33,8 +36,12 @@ export const UserSlice = createSlice({
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
     },
+    setUserAddress: (state, action) => {
+      state.userAddresses = action.payload;
+    },
   },
 });
-export const { setUserDetails, setIsLoggedIn } = UserSlice.actions;
+export const { setUserDetails, setIsLoggedIn, setUserAddress } =
+  UserSlice.actions;
 
 export default UserSlice.reducer;

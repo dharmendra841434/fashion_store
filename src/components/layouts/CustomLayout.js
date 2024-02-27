@@ -4,10 +4,10 @@ import CustomHeader from "./CustomHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const CustomLayout = ({ children }) => {
+const CustomLayout = ({ token, children }) => {
   return (
     <>
-      <CustomHeader />
+      <CustomHeader token={token} />
       {children}
       <CustomFooter />
       <ToastContainer />

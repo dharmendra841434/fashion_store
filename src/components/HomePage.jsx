@@ -3,7 +3,7 @@
 import { menuOptions } from "@/usefullData/MenuOptions";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/Home.module.css";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import NewProductSlider from "./homeComponents/NewProductSlider";
@@ -15,6 +15,7 @@ const HomePage = () => {
   const pathname = usePathname();
   const [isOpne, setIsOpne] = useState(false);
   const [selectedOption, setSelectedOption] = useState(menuOptions[0]?.title);
+
   return (
     <>
       <div className="pb-6 ">

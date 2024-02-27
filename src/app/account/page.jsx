@@ -1,7 +1,8 @@
+import PersonalInfo from "@/components/account/PersonalInfo";
 import React from "react";
 
 const Account = () => {
-  return <div>Account</div>;
+  return <PersonalInfo />;
 };
 
 export default Account;

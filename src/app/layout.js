@@ -1,6 +1,7 @@
 import "./globals.css";
 import CustomLayout from "@/components/layouts/CustomLayout";
 import Providers from "@/redux/Providers";
+import { cookies } from "next/headers";
 
 export const metadata = {
   title: "Create Next App",
@@ -8,11 +9,13 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const cookieStore = cookies();
+  const token = cookieStore.get("accessToken");
   return (
     <html lang="en">
       <body className="font-Montserrat">
         <Providers>
-          <CustomLayout>{children}</CustomLayout>
+          <CustomLayout token={token?.value}>{children}</CustomLayout>
         </Providers>
         <div id="modal" />
       </body>

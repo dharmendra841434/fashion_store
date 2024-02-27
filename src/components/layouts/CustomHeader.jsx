@@ -16,7 +16,7 @@ import { getUserDetails } from "@/redux/slice/userSlice";
 import { sortString } from "@/utils/helper";
 //import { FaUserCircle } from "react-icons/fa";
 
-const CustomHeader = () => {
+const CustomHeader = ({ token }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isOpenModel, setIsOpenModel] = useState(false);
 
@@ -32,11 +32,9 @@ const CustomHeader = () => {
   const navigation = useRouter();
 
   const getUser = async () => {
-    let t = localStorage.getItem("accessToken");
-    // console.log(t);
-    if (t !== null) {
-      //console.log(t, "token");
-      await dispatch(getUserDetails(t));
+    // console.log(token);
+    if (token) {
+      await dispatch(getUserDetails(token));
     }
   };
 
@@ -52,32 +50,12 @@ const CustomHeader = () => {
       <div className="hidden lg:block">
         <div className="border-b-2 bg-appBlack border-appRed">
           <div className="flex items-center justify-between px-2 py-1 mx-auto max-w-7xl">
-            <WebLogo className="flex items-center" />
-            <div className="  w-[39rem] relative">
+            <WebLogo className="flex items-center lg:w-[25%]" />
+            <div className="  lg:w-[50%] relative ">
               <CustomSearchBar />
             </div>
-            <div className="flex items-center gap-x-3">
-              <div className="flex flex-col items-center ">
-                <div className="relative cursor-pointer ">
-                  <FiHeart className="text-xl text-white " />
-                  <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
-                    2
-                  </span>
-                </div>
-                <h3 className=" text-white text-[12px] mt-0.5">
-                  Your Wishlist
-                </h3>
-              </div>
-              <div className="flex flex-col items-center ">
-                <div className="relative cursor-pointer ">
-                  <BsCart3 className="text-xl text-white " />
-                  <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
-                    6
-                  </span>
-                </div>
-                <h3 className=" text-white text-[12px] mt-0.5">Your Cart</h3>
-              </div>
-              <div className="-mt-3 ">
+            <div className=" flex items-center justify-between w-[25%] pr-3 gap-x-2 pl-2">
+              <div className="">
                 {userData === null ? (
                   <button
                     onClick={() => {
@@ -85,7 +63,7 @@ const CustomHeader = () => {
                       // loginNow();
                       setIsOpenModel(!isOpenModel);
                     }}
-                    className="flex flex-col items-center "
+                    className="flex items-center gap-x-2 "
                     // className="px-4 text-white capitalize transition-all duration-300 ease-in-out rounded bg-appRed hover:scale-105"
                   >
                     <FaCircleUser className="text-3xl text-white " />
@@ -97,19 +75,34 @@ const CustomHeader = () => {
                   <button
                     name="profile"
                     onClick={() => {
-                      navigation.push("/account/personal-info");
+                      navigation.push("/account");
                     }}
-                    className="flex-col items-center justify-center "
+                    className="flex items-center gap-x-2"
                   >
                     <img src="/images/user.png" className="w-8 h-8 ml-[25%]" />
                     <h3 className=" text-white text-[12px] mt-0.5 capitalize">
-                      {sortString(
-                        `${userData?.firstName} ${userData?.lastName}`,
-                        18
-                      )}
+                      {sortString(`${userData?.firstName}`, 18)}
                     </h3>
                   </button>
                 )}
+              </div>
+              <div className="flex items-center gap-x-2 ">
+                <div className="relative cursor-pointer ">
+                  <BsCart3 className="text-xl text-white " />
+                  <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
+                    6
+                  </span>
+                </div>
+                <h3 className="text-sm text-white ">Cart</h3>
+              </div>
+              <div className="flex items-center gap-x-2">
+                <div className="relative cursor-pointer ">
+                  <FiHeart className="text-xl text-white " />
+                  <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
+                    2
+                  </span>
+                </div>
+                <h3 className="text-sm text-white ">Wishlist</h3>
               </div>
             </div>
           </div>
@@ -166,11 +159,8 @@ const CustomHeader = () => {
             ) : (
               <div className="flex-col items-center justify-center ">
                 <img src="/images/user.png" className="w-10 h-10 ml-[25%]" />
-                <h3 className=" text-white text-[12px] mt-0.5  capitalize">
-                  {sortString(
-                    `${userData?.firstName} ${userData?.lastName}`,
-                    14
-                  )}
+                <h3 className=" text-white text-[12px]   capitalize">
+                  {sortString(`${userData?.firstName}`, 14)}
                 </h3>
               </div>
             )}
