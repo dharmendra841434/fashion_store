@@ -137,6 +137,75 @@ const Auth = ({ setOpenModel }) => {
           className=" absolute opacity-20  -top-[12rem] left-[30%] "
         />
       </div>
+      <div className=" w-[95%] md:w-[50%] bg-red-300 my-10 relative rounded-md overflow-hidden">
+        <div className="absolute top-0 z-30 left-3 right-3 ">
+          <div className="flex justify-center w-full mt-6 ">
+            <WebLogo className="flex items-center " />
+          </div>
+          <div>
+            <>
+              {!OTPStatus ? (
+                <div className="px-3">
+                  <h3 className="mt-10 text-2xl font-bold text-center text-gray-900 ">
+                    Welcome Back👏
+                  </h3>
+                  <div className="flex flex-col mt-7">
+                    <p className="font-semibold ">Enter Mobile Number</p>
+                    <input
+                      className="my-3 text-sm bg-transparent border-b-2 border-gray-800 outline-none placeholder:text-gray-800"
+                      placeholder="+91XXXXXXXXX"
+                      onChange={(e) => {
+                        setMobileNumber(e.target.value);
+                      }}
+                    />
+                    <span className="mt-3 text-sm font-thin ">
+                      By continuing, you agree to Dev-Trendy's{" "}
+                      <span className="text-blue-600 ">Terms of Use</span> and{" "}
+                      <span className="text-blue-600 ">Privacy Policy</span>.
+                    </span>
+                    <div className="flex flex-col items-center pt-8 ">
+                      {otpLoader ? (
+                        <CircleLoader />
+                      ) : (
+                        <button
+                          onClick={() => {
+                            login();
+                          }}
+                          className="w-full py-2 font-medium text-white transition-all duration-300 ease-in-out rounded-md bg-appRed hover:bg-appRed/80"
+                        >
+                          Request Otp
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <Otp
+                    setModelState={setOpenModel}
+                    setPageStatus={setOTPStatus}
+                  />
+                </div>
+              )}
+            </>
+          </div>
+        </div>
+        <img
+          src="/images/shap2.png"
+          className="absolute top-0 opacity-30 left-10"
+        />
+        <img
+          src="/images/shap3.png"
+          className=" absolute opacity-20  -bottom-10 left-[5%] "
+        />
+        <MdClose
+          onClick={() => {
+            setOpenModel(false);
+            setOTPStatus(false);
+          }}
+          className="absolute z-50 text-3xl text-gray-900 cursor-pointer top-3 right-3"
+        />
+      </div>
     </div>
   );
 };

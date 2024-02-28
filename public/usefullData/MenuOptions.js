@@ -116,3 +116,22 @@ export const newProductmenu = [
     route: "/accessories",
   },
 ];
+
+export const accountOptions = [
+  {
+    title: "Orders",
+    path: "/account/orders",
+  },
+  {
+    title: "Whishlist",
+    path: "/account/whishlist",
+  },
+  {
+    title: "Coupons",
+    path: "/account/coupons",
+  },
+  {
+    title: "Help Center",
+    path: "/account/help-center",
+  },
+];

@@ -3,7 +3,14 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { FaShoppingBag, FaUser, FaWallet } from "react-icons/fa";
+import {
+  FaShoppingBag,
+  FaUser,
+  FaWallet,
+  FaRegHeart,
+  FaHeadphonesAlt,
+} from "react-icons/fa";
+import { FiGift } from "react-icons/fi";
 import { GoFileDirectoryFill } from "react-icons/go";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import axios from "axios";
@@ -14,16 +21,17 @@ import {
   setUserAddress,
   setUserDetails,
 } from "@/redux/slice/userSlice";
+import { BsArrowLeft } from "react-icons/bs";
+import { accountOptions } from "../../../public/usefullData/MenuOptions";
 
 const AccountLayout = ({ children }) => {
   const userData = useSelector((state) => state.user?.userDetails);
-  const [selectedOption, setSelectedOption] = useState("Personal Information");
 
   const navigation = useRouter();
   const pathname = usePathname();
 
   const dispatch = useDispatch();
-  console.log(pathname);
+  //console.log(pathname);
   const accountSettingOptions = [
     { title: "Personal Information", route: "/account" },
     { title: "Manage Addresses", route: "/account/manage-addresses" },
@@ -93,7 +101,7 @@ const AccountLayout = ({ children }) => {
   };
   return (
     <>
-      <div className="px-4 py-4 mx-auto max-w-7xl">
+      <div className="mx-auto lg:px-4 lg:py-4 max-w-7xl">
         <div className="hidden lg:block">
           <div className="flex gap-x-2 ">
             <div className=" w-[30%]">
@@ -206,6 +214,55 @@ const AccountLayout = ({ children }) => {
               {children}
             </div>
           </div>
+        </div>
+        <div className=" lg:hidden">
+          {pathname === "account" ? (
+            <div>
+              <div className="flex ">
+                <BsArrowLeft
+                  className="text-2xl "
+                  onClick={() => navigation.back()}
+                />
+                <div className="flex ">
+                  <img alt="dp" src="/images/dp2.png" className="h-20 " />
+                  <div className="ml-3">
+                    <p className="text-[12px] ">Hello,</p>
+                    <h2 className="font-semibold capitalize text-appBlack">
+                      {userData?.firstName} {userData?.lastName}
+                    </h2>
+                    <span className="text-[12px] text-gray-400 -mt-4 ">
+                      Save your addresses to easly buy products
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-3 ">
+                {accountOptions.map((item, index) => (
+                  <div
+                    key={index}
+                    onClick={() => navigation.push(item.path)}
+                    className="flex items-center p-3 text-sm border border-gray-300 rounded-md cursor-pointer gap-x-2 text-appTextBlack"
+                  >
+                    {item.title === "Orders" && (
+                      <FaShoppingBag className="text-2xl text-appRed" />
+                    )}
+                    {item.title === "Whishlist" && (
+                      <FaRegHeart className="text-2xl text-appRed" />
+                    )}
+                    {item.title === "Coupons" && (
+                      <FiGift className="text-2xl text-appRed" />
+                    )}
+                    {item.title === "Help Center" && (
+                      <FaHeadphonesAlt className="text-2xl text-appRed" />
+                    )}
+                    <h3>{item.title}</h3>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="">{children}</div>
+          )}
         </div>
       </div>
     </>

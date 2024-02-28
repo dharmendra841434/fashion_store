@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import DataBaseConnection from "@/utils/connectDB";
-import { User } from "@/utils/models/user.model";
+import { User } from "@/utils/models/user.model.js";
 
 DataBaseConnection();
 

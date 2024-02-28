@@ -10,14 +10,16 @@ const DropDown = ({
   setSelectedItem,
 }) => {
   return (
-    <div className="relative  lg:hidden">
+    <div className="relative lg:hidden">
       <button
         onClick={() => {
           setDropDown(!dropDown);
         }}
         className={`${styles.dropDown} border border-gray-300 rounded`}
       >
-        <p>{selectedItem && selectedItem}</p>
+        <p className="text-sm  text-appTextBlack">
+          {selectedItem && selectedItem}
+        </p>
         <MdKeyboardArrowDown
           className={` transition-all duration-300 ease-in-out ml-3 ${
             dropDown ? "rotate-180" : "rotate-0"
@@ -25,7 +27,7 @@ const DropDown = ({
         />
       </button>
       {dropDown && (
-        <div className="absolute left-0 right-0 z-50 bg-white border border-gray-200 rounded-md  top-9 drop-shadow-2xl">
+        <div className="absolute left-0 right-0 z-50 bg-white border border-gray-200 rounded-md top-9 drop-shadow-2xl">
           {data?.map((item, index) => (
             <div
               key={index}
@@ -33,7 +35,7 @@ const DropDown = ({
                 setSelectedItem(item.title);
                 setDropDown(false);
               }}
-              className=" px-2 py-0.5 hover:bg-appRed hover:text-white"
+              className=" px-2 py-0.5 hover:bg-appRed hover:text-white capitalize text-sm"
             >
               <p>{item.title}</p>
             </div>

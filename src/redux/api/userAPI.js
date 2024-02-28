@@ -31,6 +31,12 @@ export const userAPI = {
       .then((res) => res.data)
       .catch((error) => error);
   },
+
+  getUserOrders: async (id) => {
+    return await axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_UR}/order/order-list/${id}`)
+      .then((res) => res.data);
+  },
   // getRefreshToken: async (value) => {
   //   return await axios
   //     .post(`${process.env.NEXT_PUBLIC_USER_API_URL}/ref-token`, {

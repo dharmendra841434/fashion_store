@@ -118,7 +118,7 @@ const NewProductSlider = () => {
         <Slider {...settings}>
           {filtredList?.map((item, index) => (
             <div key={item?.product_name} className="z-20 px-1 py-4 group">
-              <div className="relative transition-all duration-300 ease-in-out bg-white border-2 border-gray-300 cursor-pointer hover:border-red-500 hover:-translate-y-3">
+              <div className="relative transition-all duration-300 ease-in-out bg-white border border-gray-300 cursor-pointer hover:border-red-500 hover:-translate-y-3">
                 <div className="absolute right-0 px-1 text-sm text-white border top-2 bg-appRed border-appRed">
                   {item?.discount}%Off
                 </div>
@@ -179,7 +179,7 @@ const NewProductSlider = () => {
           {filtredList?.map((item, index) => (
             <div key={item?.product_name} className={`  group z-20 px-2  `}>
               <div
-                className={`  bg-white  transition-all duration-300 ease-in-out border-2 border-gray-300 hover:border-red-500 cursor-pointer`}
+                className={`  bg-white  transition-all duration-300 ease-in-out border border-gray-300 hover:border-red-500 cursor-pointer`}
               >
                 <div className="px-8 mt-10 ">
                   <img src={item?.coverImage} className="w-full h-56 " />
@@ -204,6 +204,25 @@ const NewProductSlider = () => {
                         {item?.price}
                       </p>
                     </div>
+                  </div>
+                  <Rating value={4} />
+                  <div className="flex justify-center mt-3 translate-x-8 gap-x-3">
+                    {item?.images?.map((item, index) => (
+                      <div
+                        key={index}
+                        className={`border-2 border-gray-500 rounded-full bg-white ${
+                          index == 1
+                            ? "-translate-x-7"
+                            : index == 2
+                            ? "-translate-x-14"
+                            : index == 3
+                            ? " -translate-x-20"
+                            : ""
+                        }`}
+                      >
+                        <img src={item} className="w-10 h-10 rounded-full" />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
