@@ -21,6 +21,7 @@ const CustomHeader = ({ token }) => {
   const [isOpenModel, setIsOpenModel] = useState(false);
 
   const userData = useSelector((state) => state.user?.userDetails);
+  const cartData = useSelector((state) => state.user?.cartItems);
   //console.log(userData, "usersss");
 
   const path = useRouter();
@@ -51,7 +52,7 @@ const CustomHeader = ({ token }) => {
         <div className="border-b-2 bg-appBlack border-appRed">
           <div className="flex items-center justify-between px-2 py-1 mx-auto max-w-7xl">
             <WebLogo
-              className="flex items-center lg:w-[25%] "
+              className="flex items-center lg:w-[20%] "
               onClick={() => navigation.push("/")}
             />
             <div className="  lg:w-[50%] relative ">
@@ -78,7 +79,7 @@ const CustomHeader = ({ token }) => {
                     className="flex items-center gap-x-2"
                   >
                     <img src="/images/user.png" className="w-8 h-8 ml-[25%]" />
-                    <h3 className=" text-white text-[12px] mt-0.5 capitalize">
+                    <h3 className=" text-white text-[12px] hidden xl:block mt-0.5 capitalize">
                       {sortString(`${userData?.firstName}`, 18)}
                     </h3>
                   </button>
@@ -86,10 +87,14 @@ const CustomHeader = ({ token }) => {
               </div>
               <div className="flex items-center gap-x-2 ">
                 <div className="relative cursor-pointer ">
-                  <BsCart3 className="text-xl text-white " />
-                  <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
-                    6
-                  </span>
+                  <button onClick={() => navigation.push("/cart")}>
+                    <BsCart3 className="text-xl text-white " />
+                  </button>
+                  {cartData?.length > 0 && (
+                    <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
+                      {cartData?.length}
+                    </span>
+                  )}
                 </div>
                 <h3 className="text-sm text-white ">Cart</h3>
               </div>

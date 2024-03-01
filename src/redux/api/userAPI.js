@@ -37,6 +37,31 @@ export const userAPI = {
       .get(`${process.env.NEXT_PUBLIC_BASE_UR}/order/order-list/${id}`)
       .then((res) => res.data);
   },
+
+  getSingleProduct: async (id) => {
+    return await axios
+      .get(`${process.env.NEXT_PUBLIC_BASE_UR}/product/single-product/${id}`)
+      .then((res) => res.data);
+  },
+  updateUser: async (id, data) => {
+    console.log(id, data);
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_BASE_UR}/user/update/${id}`, data)
+      .then((res) => res?.data);
+  },
+
+  getLocation: async (data) => {
+    const { latitude, longitude } = data;
+    // console.log(latitude, longitude);
+    await axios
+      .get(
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+      )
+      .then((res) => {
+        // console.log(res?.data);
+        return res?.data;
+      });
+  },
   // getRefreshToken: async (value) => {
   //   return await axios
   //     .post(`${process.env.NEXT_PUBLIC_USER_API_URL}/ref-token`, {

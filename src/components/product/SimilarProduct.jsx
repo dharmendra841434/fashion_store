@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useDispatch, useSelector } from "react-redux";
 import { BsCurrencyRupee } from "react-icons/bs";
-import { allProductsRequest, setfiltredList } from "@/redux/slice/productSlice";
-import DropDown from "./DropDown";
-import Rating from "./Ratings";
-import { newProductmenu } from "@/usefullData/MenuOptions";
+import { allProductsRequest } from "@/redux/slice/productSlice";
+import Rating from "../homeComponents/Ratings";
 import { calculateDiscountedPrice } from "@/utils/helper";
 import { useRouter } from "next/navigation";
 
-const NewProductSlider = () => {
+const SimilarProduct = ({ id }) => {
   const path = useRouter();
-  const filtredList = useSelector((state) => state.product.filteredProductList);
   const productList = useSelector((state) => state.product.productList);
-  const [selectedOption, setSelectedOption] = useState(
-    newProductmenu[0]?.title
-  );
-  const [dropDown, setDropDown] = useState(false);
-  const [loader, setLoader] = useState(false);
+  const [similarProducts, setSimilarProducts] = useState();
 
-  const [activeItem, setActiveItem] = useState("T-Shirt");
   var settings = {
-    slidesToShow: 5, //filtredList?.length,
+    slidesToShow: 5, //similarProducts?.length,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
@@ -49,76 +40,30 @@ const NewProductSlider = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(allProductsRequest());
-    setActiveItem("T-Shirt");
+    //console.log(data?.type);
+    let response = productList?.filter((item, index) => item?._id === id);
+    //console.log(response, "is");
+    let filterList = productList?.filter(
+      (item, index) => item?.type === response[0]?.type
+    );
+    // console.log(filterList);
+    let f = filterList?.filter((item, index) => item?._id !== response[0]?._id);
+    setSimilarProducts(f);
   }, []);
+  //console.log(similarProducts?.length, "filters");
 
-  //console.log(filtredList, "this is list");
-  const filtreBasedOnMenu = (menuType) => {
-    var list = [...productList];
-    //console.log(list, "jhyiuju");
-    if (menuType === "hoodies") {
-      let hoodies = list?.filter((item, index) => item?.type === "hoodies");
-      // console.log(hoodies, "hood");
-      dispatch(setfiltredList(hoodies));
-    }
-    if (menuType === "t-shirt") {
-      let tshirts = list?.filter((item, index) => item?.type === "t-shirt");
-      // console.log(hoodies, "hood");
-      dispatch(setfiltredList(tshirts));
-    }
-  };
-
-  console.log(filtredList);
+  //console.log(productList);
 
   return (
-    <div className="mt-6 ">
+    <div className="px-2 mt-6 lg:px-4 ">
       <div className="flex items-center justify-between py-5 lg:mx-0">
-        <h2 className="w-1/3 text-2xl font-bold text-gray-700 uppercase lg:w-auto">
-          New Products
+        <h2 className="text-2xl font-bold text-gray-700 capitalize lg:w-auto">
+          Similar Products
         </h2>
-        <div className="hidden lg:block">
-          <div className="flex items-center gap-x-6">
-            {newProductmenu?.map((item, index) => (
-              <div key={index} className="cursor-pointer group">
-                <h4
-                  onClick={() => {
-                    filtreBasedOnMenu(item.title?.toLocaleLowerCase());
-                    setActiveItem(item.title);
-                  }}
-                  className={` font-medium ${
-                    activeItem == item.title ? "text-appRed" : "text-appBlack"
-                  }  text-sm  group-hover:text-appRed`}
-                >
-                  {item.title}
-                </h4>
-
-                <div className="flex mt-1 ">
-                  <div
-                    className={`h-[2px] bg-appRed  transition-all duration-500 ease-in-out  ${
-                      activeItem == item.title
-                        ? "w-full  bg-appRed h-[2px]"
-                        : " w-0 group-hover:w-full"
-                    }`}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className=" lg:hidden">
-          <DropDown
-            data={newProductmenu}
-            setDropDown={setDropDown}
-            dropDown={dropDown}
-            selectedItem={selectedOption}
-            setSelectedItem={setSelectedOption}
-          />
-        </div>
       </div>
-      <div className="hidden mt-5 mb-10 lg:block">
+      <div className="hidden mb-10 lg:block">
         <Slider {...settings}>
-          {filtredList?.map((item, index) => (
+          {similarProducts?.map((item, index) => (
             <button
               onClick={() => path.push(`/product/${item?.type}/${item?._id}`)}
               key={item?.product_name}
@@ -182,7 +127,7 @@ const NewProductSlider = () => {
       </div>
       <div className="my-10 md:hidden">
         <Slider {...mobileSlidesettings}>
-          {filtredList?.map((item, index) => (
+          {similarProducts?.map((item, index) => (
             <button
               onClick={() => path.push(`/product/${item?.type}/${item?._id}`)}
               key={item?.product_name}
@@ -242,7 +187,7 @@ const NewProductSlider = () => {
       </div>
       <div className="hidden my-10 md:block lg:hidden">
         <Slider {...tabSlidesettings}>
-          {filtredList?.map((item, index) => (
+          {similarProducts?.map((item, index) => (
             <div key={item?.product_name} className="z-20 group">
               <div
                 // onMouseOver={() => {
@@ -296,4 +241,4 @@ const NewProductSlider = () => {
   );
 };
 
-export default NewProductSlider;
+export default SimilarProduct;

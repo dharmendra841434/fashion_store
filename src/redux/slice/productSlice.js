@@ -9,11 +9,11 @@ export const allProductsRequest = createAsyncThunk(
     try {
       dispatch(setListLoader(true));
       const productsData = await productAPI.getAllProduct();
-      //  console.log(productsData, "all list");
-      let tshirt = productsData.data;
-      let filtered = tshirt.filter((item, index) => item.type === "t-shirt");
-      // console.log(filtered, "filtered");
-      dispatch(setProductList(tshirt));
+      // console.log(productsData, "all list");
+      let data = productsData.data;
+      let filtered = data.filter((item, index) => item.type === "t-shirt");
+      //console.log(filtered, "filtered");
+      dispatch(setProductList(data));
       dispatch(setfiltredList(filtered));
       dispatch(setListLoader(false));
     } catch (error) {

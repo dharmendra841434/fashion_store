@@ -137,7 +137,7 @@ const Auth = ({ setOpenModel }) => {
           className=" absolute opacity-20  -top-[12rem] left-[30%] "
         />
       </div>
-      <div className=" w-[95%] md:w-[50%] bg-red-300 my-10 relative rounded-md overflow-hidden">
+      <div className=" lg:hidden w-[95%] md:w-[50%] bg-red-300 my-10 relative rounded-md overflow-hidden">
         <div className="absolute top-0 z-30 left-3 right-3 ">
           <div className="flex justify-center w-full mt-6 ">
             <WebLogo className="flex items-center " />
