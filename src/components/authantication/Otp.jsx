@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import OtpInput from "../OtpInput";
 import Loader2 from "./Loader2";
 import {
+  setCartItems,
   setIsLoggedIn,
   setUserAddress,
   setUserDetails,
+  updateUserCartItems,
 } from "@/redux/slice/userSlice";
 import { userAPI } from "@/redux/api/userAPI";
+import { removeDuplicates } from "@/utils/helper";
 
 const Otp = ({ setModelState, setPageStatus }) => {
+  const cartItems = useSelector((state) => state.user.cartItems);
   const [pin1, setPin1] = useState("");
   const [pin2, setPin2] = useState("");
   const [pin3, setPin3] = useState("");
@@ -55,12 +59,22 @@ const Otp = ({ setModelState, setPageStatus }) => {
           }
         )
         .then(async (res) => {
-          console.log(res.data);
+          // console.log(res.data);
           dispatch(setUserDetails(res.data?.data));
-          const addreses = await userAPI.getUserAddress(
-            res.data?.data?.user?._id
-          );
-          dispatch(setUserAddress(addreses?.addresses));
+          let cart = cartItems?.concat(...res?.data?.data?.cartItems);
+          let rmData = removeDuplicates(cart, "_id");
+          // console.log(rmData);
+          dispatch(setCartItems(rmData));
+          const data = {
+            userId: res.data?.data?._id,
+            cartItems: rmData,
+          };
+          dispatch(updateUserCartItems(data));
+          await userAPI.getUserAddress(res.data?.data?._id).then((addreses) => {
+            // console.log(addreses);
+            dispatch(setUserAddress(addreses?.addresses));
+          });
+
           dispatch(setIsLoggedIn(true));
           // localStorage.setItem("accessToken", res.data?.accessToken);
           localStorage.removeItem("otpDetails");

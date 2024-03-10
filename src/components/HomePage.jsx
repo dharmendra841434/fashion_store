@@ -3,12 +3,13 @@
 import { menuOptions } from "@/usefullData/MenuOptions";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import styles from "@/styles/Home.module.css";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import NewProductSlider from "./homeComponents/NewProductSlider";
 import DropDown from "./homeComponents/DropDown";
 import HotDeals from "./homeComponents/HotDeals";
+import ListLoader from "./loaders/ListLoader";
 
 const HomePage = () => {
   const path = useRouter();
@@ -132,7 +133,15 @@ const HomePage = () => {
             </div>
           </div>
           <div className="px-3 ">
-            <NewProductSlider />
+            <Suspense
+              fallback={
+                <>
+                  <h2>Loading....</h2>
+                </>
+              }
+            >
+              <NewProductSlider />
+            </Suspense>
           </div>
         </div>
         <HotDeals />

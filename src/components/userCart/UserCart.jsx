@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderMobileView from "../account/HeaderMobileView";
 import { useDispatch, useSelector } from "react-redux";
 import { MdClose } from "react-icons/md";
@@ -26,6 +26,7 @@ import {
 } from "@/redux/slice/userSlice";
 import { BsCartXFill, BsCurrencyRupee } from "react-icons/bs";
 import { useRouter } from "next/navigation";
+import Auth from "../authantication/Auth";
 
 const UserCart = () => {
   const cartItems = useSelector((state) => state.user.cartItems);
@@ -33,12 +34,14 @@ const UserCart = () => {
   const userData = useSelector((state) => state.user?.userDetails);
   const totalPrice = useSelector((state) => state.user?.totalPrice);
   const [isChange, setIsChange] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(userAddress[0]);
+  console.log(userAddress, "userAddress from cart");
+  const [selectedAddress, setSelectedAddress] = useState();
   const [pinCode, setPinCode] = useState("");
+  const [loginModal, setLoginModal] = useState(false);
   const dispatch = useDispatch();
   const navigation = useRouter();
 
-  console.log(cartItems, "cartData");
+  //console.log(cartItems, "cartData");
 
   const decreaseQuantity = (item) => {
     if (item?.quantity > 1) {
@@ -85,11 +88,20 @@ const UserCart = () => {
     dispatch(setTotalPrice(calculateTotalPrice(res)));
   };
 
+  useEffect(() => {
+    setSelectedAddress(userAddress && userAddress[0]);
+  }, [userAddress]);
+
+  //console.log(selectedAddress);
+
   return (
     <div className="mx-auto max-w-7xl">
       <div className=" lg:hidden">
         <HeaderMobileView title="Cart" isLogo={true} />
       </div>
+      <CustomModal isOpen={loginModal}>
+        <Auth setOpenModel={setLoginModal} />
+      </CustomModal>
       <CustomModal isOpen={isChange} className=" bg-[rgba(0,0,0,0.6)]">
         <div className="relative z-40 flex items-center justify-center w-full h-full ">
           <div className="bg-white w-[96%]  lg:w-[30%] h-fit cursor-auto py-3 px-5 rounded-md ">
@@ -203,49 +215,94 @@ const UserCart = () => {
         <div className="px-2 lg:px-4 ">
           <div className="flex flex-col lg:flex-row gap-x-4 ">
             <div className=" lg:w-[60%]">
-              <div>
-                <div className="relative px-3 py-4 my-6 border border-gray-300">
-                  <h2 className="px-2 py-1 text-[12px] uppercase bg-gray-300 rounded-md font-medium text-appTextBlack w-fit">
-                    {selectedAddress?.adressType}
-                  </h2>
-                  <div className="flex mt-2 text-sm ">
-                    <p className="font-medium capitalize ">
-                      {selectedAddress?.firstName}
-                    </p>
-                    <p className="ml-2 font-medium capitalize ">
-                      {selectedAddress?.lastName}
-                    </p>
-                    <p className="ml-2 font-medium capitalize ">
-                      {userData?.phone}
-                    </p>
-                  </div>
-                  <div className="flex mt-1 text-sm gap-x-1 ">
-                    <p className="capitalize ">
-                      {selectedAddress?.calonyORvillage}
-                    </p>
-                    <p className="capitalize ">
-                      {selectedAddress?.houseNumber}
-                    </p>
-                    <p className="capitalize ">{selectedAddress?.city}</p>
-                    <p className="capitalize ">{selectedAddress?.landmark}</p>
-                    <p className="capitalize ">
-                      {selectedAddress?.state}
-                    </p>-{" "}
-                    <p className="font-medium capitalize ">
-                      {selectedAddress?.pinCode}
-                    </p>
-                  </div>
-                  <div className="absolute top-4 right-4">
-                    <button
-                      onClick={() => setIsChange(!isChange)}
-                      className="px-4 py-1 text-[12px] font-medium border rounded-md text-appRed border-appRed"
-                    >
-                      Change
-                    </button>
+              {selectedAddress ? (
+                <div>
+                  <div className="relative px-3 py-4 my-6 border border-gray-300">
+                    <h2 className="px-2 py-1 text-[12px] uppercase bg-gray-300 rounded-md font-medium text-appTextBlack w-fit">
+                      {selectedAddress?.adressType}
+                    </h2>
+                    <div className="flex mt-2 text-sm ">
+                      <p className="font-medium capitalize ">
+                        {selectedAddress?.firstName}
+                      </p>
+                      <p className="ml-2 font-medium capitalize ">
+                        {selectedAddress?.lastName}
+                      </p>
+                      <p className="ml-2 font-medium capitalize ">
+                        {userData?.phone}
+                      </p>
+                    </div>
+                    <div className="flex mt-1 text-sm gap-x-1 ">
+                      <p className="capitalize ">
+                        {selectedAddress?.calonyORvillage}
+                      </p>
+                      <p className="capitalize ">
+                        {selectedAddress?.houseNumber}
+                      </p>
+                      <p className="capitalize ">{selectedAddress?.city}</p>
+                      <p className="capitalize ">{selectedAddress?.landmark}</p>
+                      <p className="capitalize ">
+                        {selectedAddress?.state}
+                      </p>-{" "}
+                      <p className="font-medium capitalize ">
+                        {selectedAddress?.pinCode}
+                      </p>
+                    </div>
+                    <div className="absolute top-4 right-4">
+                      <button
+                        onClick={() => setIsChange(!isChange)}
+                        className="px-4 py-1 text-[12px] font-medium border rounded-md text-appRed border-appRed"
+                      >
+                        Change
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="border border-gray-300 gap-x-2">
+              ) : (
+                <div>
+                  <h2 className="my-3 font-semibold text-appTextBlack">
+                    Use Pincode to check delivery info
+                  </h2>
+                  <div className="flex my-3 mt-2 gap-x-2">
+                    <input
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        const regex = /^[0-9\b]+$/;
+                        if (value === "" || regex.test(value)) {
+                          setPinCode(value);
+                        }
+                      }}
+                      value={pinCode}
+                      placeholder="Enter Pincode"
+                      className="w-full border-b-2 outline-none border-b-gray-300 placeholder:text-sm"
+                    />
+                    <button className="px-4 py-1 text-sm text-white bg-appRed">
+                      Check
+                    </button>
+                  </div>
+                  <button
+                    onClick={async () => {
+                      getLocation()
+                        .then(async (coords) => {
+                          // console.log(coords, "cords");
+                          await userAPI.getLocation(coords).then((res) => {
+                            // console.log(res, "result");
+                          });
+                        })
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }}
+                    className="flex items-center my-6 gap-x-2"
+                  >
+                    <FaLocationCrosshairs className="text-blue-500 " />
+                    <h3 className="text-sm font-medium text-blue-500 ">
+                      Use my current location
+                    </h3>
+                  </button>
+                </div>
+              )}
+              <div className="mt-5 border border-gray-300 gap-x-2">
                 {cartItems?.map((item, index) => (
                   <div
                     key={index}
@@ -348,7 +405,16 @@ const UserCart = () => {
                 ))}
               </div>
               <div className="flex flex-row justify-end p-3 mb-10 border shadow-dpShadow">
-                <button className="px-20 py-3 text-white bg-appRed">
+                <button
+                  onClick={() => {
+                    if (userData === null) {
+                      setLoginModal(!loginModal);
+                    } else {
+                      console.log("places");
+                    }
+                  }}
+                  className="px-20 py-3 text-white bg-appRed"
+                >
                   Place Order
                 </button>
               </div>
@@ -370,7 +436,9 @@ const UserCart = () => {
                     <p>Discount</p>
                     <div className="flex items-center ">
                       -<BsCurrencyRupee className="text-gray-400 " />
-                      <p>{calculateTotalAtualPrice(cartItems) - totalPrice}</p>
+                      <p className="text-gray-400 ">
+                        {calculateTotalAtualPrice(cartItems) - totalPrice}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between my-3 font-medium capitalize text-appTextBlack">

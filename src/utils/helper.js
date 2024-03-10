@@ -150,3 +150,14 @@ export function decreasQty(array, id, preValue) {
 
   return updatedArray;
 }
+
+export function removeDuplicates(array, key) {
+  return Object.values(
+    array.reduce((accumulator, currentValue) => {
+      if (!accumulator[currentValue[key]]) {
+        accumulator[currentValue[key]] = currentValue;
+      }
+      return accumulator;
+    }, {})
+  );
+}

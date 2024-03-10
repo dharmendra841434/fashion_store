@@ -17,6 +17,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setCartItems,
   setIsLoggedIn,
   setUserAddress,
   setUserDetails,
@@ -74,8 +75,9 @@ const AccountLayout = ({ children }) => {
     await axios
       .delete(`/api/user/logout`)
       .then((res) => {
+        dispatch(setCartItems([]));
+        dispatch(setUserDetails(null));
         navigation.push("/");
-
         toast.success(res.data?.message, {
           theme: "colored",
           position: "top-center",

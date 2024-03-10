@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,6 +11,7 @@ import Rating from "./Ratings";
 import { newProductmenu } from "@/usefullData/MenuOptions";
 import { calculateDiscountedPrice } from "@/utils/helper";
 import { useRouter } from "next/navigation";
+import ListLoader from "../loaders/ListLoader";
 
 const NewProductSlider = () => {
   const path = useRouter();
@@ -49,8 +50,10 @@ const NewProductSlider = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setLoader(true);
     dispatch(allProductsRequest());
     setActiveItem("T-Shirt");
+    setLoader(false);
   }, []);
 
   //console.log(filtredList, "this is list");
@@ -69,7 +72,7 @@ const NewProductSlider = () => {
     }
   };
 
-  console.log(filtredList);
+  // console.log(filtredList);
 
   return (
     <div className="mt-6 ">
@@ -117,68 +120,75 @@ const NewProductSlider = () => {
         </div>
       </div>
       <div className="hidden mt-5 mb-10 lg:block">
-        <Slider {...settings}>
-          {filtredList?.map((item, index) => (
-            <button
-              onClick={() => path.push(`/product/${item?.type}/${item?._id}`)}
-              key={item?.product_name}
-              className="z-20 px-1 py-4 group"
-            >
-              <div className="relative transition-all duration-300 ease-in-out bg-white border border-gray-300 cursor-pointer hover:border-red-500 hover:-translate-y-3">
-                <div className="absolute right-0 px-1 text-sm text-white border top-2 bg-appRed border-appRed">
-                  {item?.discount}%Off
-                </div>
-                <div className="px-8 mt-10 ">
-                  <img
-                    src={item.coverImage}
-                    className="w-full h-44 mix-blend-darken"
-                  />
-                </div>
-                <div className="flex flex-col items-center py-5 ">
-                  <h3 className="text-sm font-thin text-gray-400 capitalize ">
-                    {item?.category}
-                  </h3>
-                  <h3 className="mt-1 font-semibold text-gray-900 capitalize ">
-                    {item?.product_name}
-                  </h3>
-                  <div className="flex items-center my-1 ">
-                    <div className="flex items-center mx-1 ">
-                      <BsCurrencyRupee className="text-lg text-red-600 " />
-                      <span className="font-semibold text-red-600 ">
-                        {calculateDiscountedPrice(item?.price, item?.discount)}
-                      </span>
-                    </div>
-                    <div className="flex items-center ">
-                      <BsCurrencyRupee className="text-sm text-gray-400 " />
-                      <p className="text-sm text-gray-400 line-through ">
-                        {item?.price}
-                      </p>
-                    </div>
+        {loader ? (
+          <ListLoader />
+        ) : (
+          <Slider {...settings}>
+            {filtredList?.map((item, index) => (
+              <button
+                onClick={() => path.push(`/product/${item?.type}/${item?._id}`)}
+                key={item?.product_name}
+                className="z-20 px-1 py-4 group"
+              >
+                <div className="relative transition-all duration-300 ease-in-out bg-white border border-gray-300 cursor-pointer hover:border-red-500 hover:-translate-y-3">
+                  <div className="absolute right-0 px-1 text-sm text-white border top-2 bg-appRed border-appRed">
+                    {item?.discount}%Off
                   </div>
-                  <Rating value={4} />
-                  <div className="flex justify-center mt-3 translate-x-14 gap-x-3">
-                    {item?.images?.map((item, index) => (
-                      <div
-                        key={index}
-                        className={`border-2 border-gray-500 rounded-full bg-white ${
-                          index == 1
-                            ? "-translate-x-8"
-                            : index == 2
-                            ? "-translate-x-16"
-                            : index == 3
-                            ? " -translate-x-24"
-                            : ""
-                        }`}
-                      >
-                        <img src={item} className="w-10 h-10 rounded-full" />
+                  <div className="px-8 mt-10 ">
+                    <img
+                      src={item.coverImage}
+                      className="w-full h-44 mix-blend-darken"
+                    />
+                  </div>
+                  <div className="flex flex-col items-center py-5 ">
+                    <h3 className="text-sm font-thin text-gray-400 capitalize ">
+                      {item?.category}
+                    </h3>
+                    <h3 className="mt-1 font-semibold text-gray-900 capitalize ">
+                      {item?.product_name}
+                    </h3>
+                    <div className="flex items-center my-1 ">
+                      <div className="flex items-center mx-1 ">
+                        <BsCurrencyRupee className="text-lg text-red-600 " />
+                        <span className="font-semibold text-red-600 ">
+                          {calculateDiscountedPrice(
+                            item?.price,
+                            item?.discount
+                          )}
+                        </span>
                       </div>
-                    ))}
+                      <div className="flex items-center ">
+                        <BsCurrencyRupee className="text-sm text-gray-400 " />
+                        <p className="text-sm text-gray-400 line-through ">
+                          {item?.price}
+                        </p>
+                      </div>
+                    </div>
+                    <Rating value={4} />
+                    <div className="flex justify-center mt-3 translate-x-14 gap-x-3">
+                      {item?.images?.map((item, index) => (
+                        <div
+                          key={index}
+                          className={`border-2 border-gray-500 rounded-full bg-white ${
+                            index == 1
+                              ? "-translate-x-8"
+                              : index == 2
+                              ? "-translate-x-16"
+                              : index == 3
+                              ? " -translate-x-24"
+                              : ""
+                          }`}
+                        >
+                          <img src={item} className="w-10 h-10 rounded-full" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </button>
-          ))}
-        </Slider>
+              </button>
+            ))}
+          </Slider>
+        )}
       </div>
       <div className="my-10 md:hidden">
         <Slider {...mobileSlidesettings}>

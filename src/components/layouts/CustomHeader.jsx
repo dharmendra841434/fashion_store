@@ -55,10 +55,10 @@ const CustomHeader = ({ token }) => {
               className="flex items-center lg:w-[20%] "
               onClick={() => navigation.push("/")}
             />
-            <div className="  lg:w-[50%] relative ">
+            <div className="  lg:w-[50%] xl:[55%] relative  ">
               <CustomSearchBar />
             </div>
-            <div className=" flex items-center justify-between w-[25%] pr-3 gap-x-2 pl-2">
+            <div className=" flex items-center justify-between w-[30%] xl:w-[25%]  pr-3 gap-x-2 pl-2">
               <div className="">
                 {userData === null ? (
                   <button
@@ -76,36 +76,38 @@ const CustomHeader = ({ token }) => {
                     onClick={() => {
                       navigation.push("/account");
                     }}
-                    className="flex items-center gap-x-2"
+                    className="flex items-center gap-x-1"
                   >
-                    <img src="/images/user.png" className="w-8 h-8 ml-[25%]" />
-                    <h3 className=" text-white text-[12px] hidden xl:block mt-0.5 capitalize">
-                      {sortString(`${userData?.firstName}`, 18)}
+                    <img src="/images/user.png" className="w-8 h-8 " />
+                    <h3 className=" text-white text-sm  mt-0.5 capitalize">
+                      {sortString(`${userData?.firstName}`, 10)}
                     </h3>
                   </button>
                 )}
               </div>
-              <div className="flex items-center gap-x-2 ">
-                <div className="relative cursor-pointer ">
-                  <button onClick={() => navigation.push("/cart")}>
-                    <BsCart3 className="text-xl text-white " />
-                  </button>
-                  {cartData?.length > 0 && (
+              <div className="flex items-center gap-x-5">
+                <div className="flex items-center gap-x-2 ">
+                  <div className="relative cursor-pointer ">
+                    <button onClick={() => navigation.push("/cart")}>
+                      <BsCart3 className="text-xl text-white " />
+                    </button>
+                    {cartData?.length > 0 && (
+                      <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
+                        {cartData?.length}
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-sm text-white ">Cart</h3>
+                </div>
+                <div className="flex items-center gap-x-2">
+                  <div className="relative cursor-pointer ">
+                    <FiHeart className="text-xl text-white " />
                     <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
-                      {cartData?.length}
+                      2
                     </span>
-                  )}
+                  </div>
+                  <h3 className="text-sm text-white ">Wishlist</h3>
                 </div>
-                <h3 className="text-sm text-white ">Cart</h3>
-              </div>
-              <div className="flex items-center gap-x-2">
-                <div className="relative cursor-pointer ">
-                  <FiHeart className="text-xl text-white " />
-                  <span className=" absolute flex items-center justify-center text-[12px] -top-3 -right-3 h-4 w-4 bg-appRed text-white rounded-full">
-                    2
-                  </span>
-                </div>
-                <h3 className="text-sm text-white ">Wishlist</h3>
               </div>
             </div>
           </div>
