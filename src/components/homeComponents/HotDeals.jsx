@@ -3,7 +3,7 @@ import Image from "next/image";
 import Countdown from "./Timmer";
 
 const HotDeals = () => {
-  const targetDate = "2024-12-01T12:00:00Z";
+  const targetDate = "2025-12-01T12:00:00Z";
   return (
     <div className=" bg-[#e5e6ef]  ">
       <div className=" flex justify-between flex-col md:flex-row max-w-[95rem] mx-auto ">
